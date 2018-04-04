@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2015
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadySeatGO!", "ReadySeatGO!\ReadySeatGO!.csproj", "{ADC5BAAA-CA0D-49AA-B9B6-58410D91F4E7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ADC5BAAA-CA0D-49AA-B9B6-58410D91F4E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADC5BAAA-CA0D-49AA-B9B6-58410D91F4E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADC5BAAA-CA0D-49AA-B9B6-58410D91F4E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADC5BAAA-CA0D-49AA-B9B6-58410D91F4E7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {123CBC26-8C05-421C-BDF8-D274B3EF85AC}
+	EndGlobalSection
+EndGlobal
