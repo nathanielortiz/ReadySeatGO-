@@ -2,8 +2,14 @@
 @{
     ViewBag.Title = "View";
 }
-
-<div class="navbar navbar-inverse navbar-fixed-top">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+    .mySlides {
+        display: none;
+    }
+</style>
+@*<div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -23,27 +29,51 @@
 
     </div>
 
-</div>
+</div>*@
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
+    <h2 class="w3-center">Welcome Patron!</h2>
+
+    <div class="w3-content w3-section" style="max-width:500px">
+        <img class="mySlides w3-animate-fading" src="https://www.kawalingpinoy.com/wp-content/uploads/2013/03/filipino-style-spaghetti-2.jpg" style="width:100%">
+        <img class="mySlides w3-animate-fading" src="https://www.kawalingpinoy.com/wp-content/uploads/2014/11/crispy-sisig-2.jpg" style="width:100%">
+        <img class="mySlides w3-animate-fading" src="https://panlasangpinoy.com/wp-content/uploads/2017/06/Ginisang-Monggo-with-Inihaw-na-Liempo-Recipe.jpg" style="width:100%">
+    </div>
+
+    <script>
+var myIndex = 0;
+carousel();
+
+function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";
+    }
+    myIndex++;
+    if (myIndex > x.length) {myIndex = 1}
+    x[myIndex-1].style.display = "block";
+    setTimeout(carousel, 4000); // Change image every 2 seconds
+}
+    </script>
+    @*<h1>Welcome!</h1>
     <p class="lead">PATRON HOMEPAGE</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+   
+   
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
+        <h2>Go to Favorites</h2>
         <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
+            Bookmark you favorite restaurant without ever navigating it to the menu
         </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Go &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <h2>Go to Restaurant Menu</h2>
+        <p>To Reserve the Restaurant of your choosing.</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Go &raquo;</a></p>
     </div>
     <div class="col-md-4">
         <h2>Web Hosting</h2>

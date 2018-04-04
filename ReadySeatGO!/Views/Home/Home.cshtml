@@ -2,8 +2,20 @@
 @{
     ViewBag.Title = "View";
 }
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script>
+    $(document).ready(function(){
+      $('.slider').bxSlider();
+    });
+    </script>
+</head>
+<body>
 
-<div class="navbar navbar-inverse navbar-fixed-top">
+</body>
+@*<div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -11,44 +23,100 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("ReadySetGO!", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Join us!", "Add", "Restaurant")</li>
                 <li>@Html.ActionLink("About", "About", "Home")</li>
                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                <li>@Html.ActionLink("Log In", "Login", "Home")</li>
             </ul>
 
         </div>
 
     </div>
 
-</div>
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">DEFAULT HOMEPAGE</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+</div>*@
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
+
+    <!-- First Photo Grid-->
+    <div class="w3-row-padding w3-padding-16 w3-center" id="food">
+        <div class="w3-quarter">
+            <img src="http://1.bp.blogspot.com/-FwaPd2ZnF_o/UMFj5ugm7mI/AAAAAAAAA9w/8bNS81qrhb8/s1600/254683_4448292721420_1523767836_n.jpg" alt="Sandwich" style="width:100%">
+            <h3><a href="https://www.zomato.com/manila/exile-on-main-st-malate-manila">Exile Taft</a></h3>
+            <p>Eat and Drink as you can</p>
+        </div>
+        <div class="w3-quarter">
+            <img src="http://4.bp.blogspot.com/-buPgyEBsv30/UX_TVFUw6mI/AAAAAAAAB8g/nH5YoII5DHo/s1600/4.jpg" alt="Steak" style="width:100%">
+            <h3><a href="https://www.zomato.com/manila/rap-steaks-and-cakes-malate-manila">Let Me Tell You About This Steak(Raps and Cakes)</a></h3>
+            <p>They have unlimited GRAVY!</p>
+        </div>
+        <div class="w3-quarter">
+            <img src="https://2.bp.blogspot.com/-owUL-cYCGqA/V4Ssaqqdn7I/AAAAAAAAE0s/TUteIY9sdCwD1L7NwWeypv7gmWpm1L9OwCKgB/s1600/Boy%2BShawarma%2B4.jpg" alt="Cherries" style="width:100%">
+            <h3><a href="https://www.zomato.com/manila/boy-shawarma-malate-manila">Boy Shawarma</a></h3>
+            <p>You dont want veggies no problem(but it has pickles).</p>
+          
+        </div>
+        <div class="w3-quarter">
+            <img src="https://www.kawalingpinoy.com/wp-content/uploads/2013/03/filipino-style-spaghetti-2.jpg" alt="Pasta and Wine" style="width:100%">
+            <h3>Once Again, Robust Wine and Vegetable Pasta</h3>
+            <p>Delicious</p>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+
+    <!-- Second Photo Grid-->
+    <div class="w3-row-padding w3-padding-16 w3-center">
+        <div class="w3-quarter">
+            <img src="http://www.eatthis.com/content/uploads/media/images/ext/638562497/sugary-restaurant-meals-ocharleys-chipotlechicken-500x382.jpg" alt="Popsicle" style="width:100%">
+            <h3>Hungry?</h3>
+            <p>Dan put any picture here</p>
+        </div>
+        <div class="w3-quarter">
+            <img src="https://i2-prod.birminghammail.co.uk/incoming/article10261462.ece/ALTERNATES/s615/Restaurant-reviews-in-Birmingham.jpg" alt="Salmon" style="width:100%">
+            <h3>Fish</h3>
+            <p>This one</p>
+        </div>
+        <div class="w3-quarter">
+            <img src="/w3images/sandwich.jpg" alt="Sandwich" style="width:100%">
+            <h3>The Perfect Sandwich, A Real Classic</h3>
+            <p>Just some random text, lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+        </div>
+        <div class="w3-quarter">
+            <img src="/w3images/croissant.jpg" alt="Croissant" style="width:100%">
+            <h3>Le French</h3>
+            <p>Lorem lorem lorem lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+
+
+
+    @*<div class="jumbotron">
+            <h1>ASP.NET</h1>
+            <img src="http://www.eatthis.com/content/uploads/media/images/ext/638562497/sugary-restaurant-meals-ocharleys-chipotlechicken-500x382.jpg" />
+            <p class="lead">DEFAULT HOMEPAGE</p>
+            <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <h2>Getting started</h2>
+                <p>
+                    ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+                    enables a clean separation of concerns and gives you full control over markup
+                    for enjoyable, agile development.
+                </p>
+                <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Get more libraries</h2>
+                <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+                <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Web Hosting</h2>
+                <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+                <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+            </div>
+        </div>*@
