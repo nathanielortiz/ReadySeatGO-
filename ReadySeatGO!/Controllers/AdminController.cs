@@ -17,13 +17,14 @@ namespace ReadySeatGO_.Controllers
             return View();
         }
 
+        // View User List
         public ActionResult UserList()
         {
             var list = new List<UsersModel>();
             using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
             {
                 Rikka.Open();
-                string Takanashi = @"SELECT t.RSG_Description, u.RSG_Username, u.RSG_Email, u.RSG_LastName,
+                string Takanashi = @"SELECT u.RSG_UserID, t.RSG_Description, u.RSG_Username, u.RSG_Email, u.RSG_LastName,
                     u.RSG_FirstName, u.RSG_Address, u.RSG_Status, u.RSG_Mobile
                     FROM RSG_Users u
                     INNER JOIN RSG_UserTypes t ON u.RSG_UserTypeID = t.RSG_UserTypeID
@@ -37,7 +38,7 @@ namespace ReadySeatGO_.Controllers
                         {
                             list.Add(new UsersModel
                             {
-
+                                UserID = int.Parse(Nibutani["RSG_UserID"].ToString()),
                                 UserType = Nibutani["RSG_Description"].ToString(),
                                 Username = Nibutani["RSG_Username"].ToString(),
                                 Email = Nibutani["RSG_Email"].ToString(),
@@ -56,51 +57,62 @@ namespace ReadySeatGO_.Controllers
             return View(list);
         }
 
-        public ActionResult PendingRestaurantApplication()
+        // View User Details
+        public ActionResult UserDetails(int? id)
         {
-            var list = new List<RestaurantModel>();
             using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
             {
-                Rikka.Open();
-                string Takanashi = @"SELECT r.RSG_RID, r.RSG_RName, r.RSG_Address, r.RSG_ContactNumber, r.RSG_OperatingHours,
-                    r.RSG_Manager, r.RSG_Branch, r.RSG_TotalSeats,
-                    u.RSG_Username, c.RSG_Category, a.RSG_Description
-                    FROM RSG_Restaurants AS r
-                    INNER JOIN RSG_Users u ON r.RSG_UserID = u.RSG_UserID
-                    INNER JOIN RSG_Categories c ON r.RSG_CatID = c.RSG_CatID
-                   INNER JOIN RSG_ApprovalStatus a ON r.RSG_ApprovalID = a.RSG_ApprovalID
-				   WHERE r.RSG_ApprovalID = 1";
-                using (SqlCommand WickedEye = new SqlCommand(Takanashi, Rikka))
+                if (id == null)
                 {
+                    return RedirectToAction("UserList");
 
-                    using (SqlDataReader Nibutani = WickedEye.ExecuteReader())
+                }
+
+                var record = new UsersModel();
+                using (SqlConnection con = new SqlConnection(Dekomori.GetConnection()))
+                {
+                    con.Open();
+                    string SQL = @"SELECT u.RSG_Username, t.RSG_Description, u.RSG_Email, u.RSG_FirstName, u.RSG_LastName,
+                                u.RSG_Address, u.RSG_Status, u.RSG_Mobile FROM RSG_Users u INNER JOIN RSG_UserTypes t ON 
+                                t.RSG_UserTypeID = u.RSG_UserTypeID
+                               WHERE u.RSG_UserID = @RSG_UserID";
+
+                    using (SqlCommand cmd = new SqlCommand(SQL, con))
                     {
-                        while (Nibutani.Read())
+                        cmd.Parameters.AddWithValue("@RSG_UserID", id);
+                        using (SqlDataReader data = cmd.ExecuteReader())
                         {
-                            list.Add(new RestaurantModel
+                            if (data.HasRows)
                             {
-                                RestaurantID = int.Parse(Nibutani["RSG_RID"].ToString()),
-                                UserName = Nibutani["RSG_UserName"].ToString(),
-                                Restaurant = Nibutani["RSG_RName"].ToString(),
-                                Address = Nibutani["RSG_Address"].ToString(),
-                                Phone = Nibutani["RSG_ContactNumber"].ToString(),
-                                Manager = Nibutani["RSG_Manager"].ToString(),
-                                Branch = Nibutani["RSG_Branch"].ToString(),
-                                TotalSeats = Nibutani["RSG_TotalSeats"].ToString(),
-                                ApprovalStatusID = Nibutani["RSG_Description"].ToString(),
-                                OperatingHours = Nibutani["RSG_OperatingHours"].ToString()
+                                while (data.Read())
+                                {
+                                    record.Username = data["RSG_Username"].ToString();
+                                    record.FirstName = data["RSG_FirstName"].ToString();
+                                    record.LastName = data["RSG_LastName"].ToString();
+                                    record.Address = data["RSG_Address"].ToString();
+                                    record.Email = data["RSG_Email"].ToString();
+                                    record.Status = data["RSG_Status"].ToString();
 
-                            });
+                                    record.UserType = data["RSG_Description"].ToString();
+                                    record.Mobile = data["RSG_Mobile"].ToString();
+
+                                }
+
+                                return View(record);
+                            }
+                            else
+                            {
+                                return RedirectToAction("UserList");
+                            }
                         }
                     }
                 }
             }
 
-            return View(list);
         }
 
 
-        
+        // Restaurant List
         public ActionResult RestaurantList()
         {
             var list = new List<RestaurantModel>();
@@ -145,9 +157,52 @@ namespace ReadySeatGO_.Controllers
             return View(list);
         }
 
+        // View Pending Restaurant Application List
+        public ActionResult PendingRestaurantApplication()
+        {
+            var list = new List<RestaurantModel>();
+            using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
+            {
+                Rikka.Open();
+                string Takanashi = @"SELECT r.RSG_RID, r.RSG_RName, r.RSG_Address, r.RSG_ContactNumber, r.RSG_OperatingHours,
+                    r.RSG_Manager, r.RSG_Branch, r.RSG_TotalSeats,
+                    u.RSG_Username, c.RSG_Category, a.RSG_Description
+                    FROM RSG_Restaurants AS r
+                    INNER JOIN RSG_Users u ON r.RSG_UserID = u.RSG_UserID
+                    INNER JOIN RSG_Categories c ON r.RSG_CatID = c.RSG_CatID
+                   INNER JOIN RSG_ApprovalStatus a ON r.RSG_ApprovalID = a.RSG_ApprovalID
+				   WHERE r.RSG_ApprovalID = 1";
+                using (SqlCommand WickedEye = new SqlCommand(Takanashi, Rikka))
+                {
 
-        
+                    using (SqlDataReader Nibutani = WickedEye.ExecuteReader())
+                    {
+                        while (Nibutani.Read())
+                        {
+                            list.Add(new RestaurantModel
+                            {
+                                RestaurantID = int.Parse(Nibutani["RSG_RID"].ToString()),
+                                UserName = Nibutani["RSG_UserName"].ToString(),
+                                Restaurant = Nibutani["RSG_RName"].ToString(),
+                                Address = Nibutani["RSG_Address"].ToString(),
+                                Phone = Nibutani["RSG_ContactNumber"].ToString(),
+                                Manager = Nibutani["RSG_Manager"].ToString(),
+                                Branch = Nibutani["RSG_Branch"].ToString(),
+                                TotalSeats = Nibutani["RSG_TotalSeats"].ToString(),
+                                ApprovalStatusID = Nibutani["RSG_Description"].ToString(),
+                                OperatingHours = Nibutani["RSG_OperatingHours"].ToString()
 
+                            });
+                        }
+                    }
+                }
+            }
+
+            return View(list);
+        }
+
+        // Approve Restaurant Application from Patron (User Type)
+        // If Approved -> User Type will change from Patron to Owner
         public ActionResult ApproveApplication(int? id)
         {
             if (id == null)
@@ -171,6 +226,8 @@ namespace ReadySeatGO_.Controllers
             return RedirectToAction("RestaurantList");
         }
 
+
+        // Reject Restaurant Application from Patron (User Type)
         public ActionResult RejectApplication(int? id)
         {
             if (id == null)
@@ -195,9 +252,185 @@ namespace ReadySeatGO_.Controllers
         }
 
 
+        // Add Admin(s)
+        bool IsExisting(string username)
+        {
+            using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
+            {
+                Rikka.Open();
+                string Takanashi = @"SELECT RSG_Username FROM RSG_Users
+                    WHERE RSG_Username=@RSG_Username";
+                using (SqlCommand WickedEye = new SqlCommand(Takanashi, Rikka))
+                {
+                    WickedEye.Parameters.AddWithValue("@RSG_Username", username);
+                    return WickedEye.ExecuteScalar() == null ? false : true;
+                }
+            }
+        }
+
+        public ActionResult AddAdmin()
+        {
+            UsersModel Chuu2 = new UsersModel();
+            return View(Chuu2);
+        }
+
+        [HttpPost]
+        public ActionResult AddAdmin(UsersModel Chuu2)
+        {
+            if (IsExisting(Chuu2.Username))
+            {
+                ViewBag.Error = "<div class='alert alert-danger'>Username is already taken!</div>";
+                return View();
+            }
+            else
+            {
+                using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
+                {
+                    Rikka.Open();
+                    string Takanashi = @"INSERT INTO RSG_Users VALUES
+                    (@RSG_UserTypeID, @RSG_Username, @RSG_UPassword, @RSG_Email, 
+                    @RSG_FirstName, @RSG_LastName,
+                    @RSG_Address, @RSG_Status, @RSG_Mobile, 
+                    @RSG_DateAdded, @RSG_DateModified)";
+                    using (SqlCommand WickedEye = new SqlCommand(Takanashi, Rikka))
+                    {
+
+                        WickedEye.Parameters.AddWithValue("@RSG_UPassword", Chuu2.UserPassword);
+                        WickedEye.Parameters.AddWithValue("@RSG_UserName", Chuu2.Username);
+                        WickedEye.Parameters.AddWithValue("@RSG_Email", Chuu2.Email);
+                        WickedEye.Parameters.AddWithValue("@RSG_FirstName", Chuu2.FirstName);
+                        WickedEye.Parameters.AddWithValue("@RSG_LastName", Chuu2.LastName);
+                        WickedEye.Parameters.AddWithValue("@RSG_Address", Chuu2.Address);
+                        WickedEye.Parameters.AddWithValue("@RSG_Status", "Active");
+                        WickedEye.Parameters.AddWithValue("@RSG_Mobile", Chuu2.Mobile);
+                        WickedEye.Parameters.AddWithValue("@RSG_DateAdded", DateTime.Now);
+                        WickedEye.Parameters.AddWithValue("@RSG_DateModified", DBNull.Value);
+                        WickedEye.Parameters.AddWithValue("@RSG_UserTypeID", 2);
+
+                        WickedEye.ExecuteNonQuery();
+                        return RedirectToAction("Home");
+                    }
+                }
+
+            }
+        }
 
 
+        // View Admin List
+        public ActionResult AdminList()
+        {
+            var list = new List<UsersModel>();
+            using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
+            {
+                Rikka.Open();
+                string Takanashi = @"SELECT u.RSG_UserID, t.RSG_Description, u.RSG_Username, u.RSG_Email, u.RSG_LastName,
+                    u.RSG_FirstName, u.RSG_Address, u.RSG_Status, u.RSG_Mobile
+                    FROM RSG_Users u
+                    INNER JOIN RSG_UserTypes t ON u.RSG_UserTypeID = t.RSG_UserTypeID
+                    WHERE u.RSG_Status!=@Status AND u.RSG_UserTypeID = 2";
+                using (SqlCommand WickedEye = new SqlCommand(Takanashi, Rikka))
+                {
+                    WickedEye.Parameters.AddWithValue("@Status", "Archived");
+                    using (SqlDataReader Nibutani = WickedEye.ExecuteReader())
+                    {
+                        while (Nibutani.Read())
+                        {
+                            list.Add(new UsersModel
+                            {
+                                UserID = int.Parse(Nibutani["RSG_UserID"].ToString()),
+                                UserType = Nibutani["RSG_Description"].ToString(),
+                                Username = Nibutani["RSG_Username"].ToString(),
+                                Email = Nibutani["RSG_Email"].ToString(),
+                                LastName = Nibutani["RSG_LastName"].ToString(),
+                                FirstName = Nibutani["RSG_FirstName"].ToString(),
+                                Address = Nibutani["RSG_Address"].ToString(),
+                                Mobile = Nibutani["RSG_Mobile"].ToString(),
+                                Status = Nibutani["RSG_Status"].ToString(),
 
+                            });
+                        }
+                    }
+                }
+            }
+
+            return View(list);
+        }
+
+        //View Admin Details
+        public ActionResult AdminDetails(int? id)
+        {
+            using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
+            {
+                if (id == null)
+                {
+                    return RedirectToAction("UserList");
+
+                }
+
+                var record = new UsersModel();
+                using (SqlConnection con = new SqlConnection(Dekomori.GetConnection()))
+                {
+                    con.Open();
+                    string SQL = @"SELECT u.RSG_Username, t.RSG_Description, u.RSG_Email, u.RSG_FirstName, u.RSG_LastName,
+                                u.RSG_Address, u.RSG_Status, u.RSG_Mobile FROM RSG_Users u INNER JOIN RSG_UserTypes t ON 
+                                t.RSG_UserTypeID = u.RSG_UserTypeID
+                                WHERE u.RSG_UserID = @RSG_UserID";
+
+                    using (SqlCommand cmd = new SqlCommand(SQL, con))
+                    {
+                        cmd.Parameters.AddWithValue("@RSG_UserID", id);
+                        using (SqlDataReader data = cmd.ExecuteReader())
+                        {
+                            if (data.HasRows)
+                            {
+                                while (data.Read())
+                                {
+                                    record.Username = data["RSG_Username"].ToString();
+                                    record.FirstName = data["RSG_FirstName"].ToString();
+                                    record.LastName = data["RSG_LastName"].ToString();
+                                    record.Address = data["RSG_Address"].ToString();
+                                    record.Email = data["RSG_Email"].ToString();
+                                    record.Status = data["RSG_Status"].ToString();
+
+                                    record.UserType = data["RSG_Description"].ToString();
+                                    record.Mobile = data["RSG_Mobile"].ToString();
+
+                                }
+
+                                return View(record);
+                            }
+                            else
+                            {
+                                return RedirectToAction("UserList");
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+        // Archive Admin
+        public ActionResult ArchiveAdmin(int? id)
+        {
+            if (id == null)
+                return RedirectToAction("AdminList");
+
+            using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
+            {
+                Rikka.Open();
+                string Takanashi = @"UPDATE RSG_Users SET RSG_Status=@RSG_Status,
+                    WHERE RSG_UserID=@RSG_UserID";
+                using (SqlCommand cmd = new SqlCommand(Takanashi, Rikka))
+                {
+                    cmd.Parameters.AddWithValue("@RSG_Status", "Archived");
+                    cmd.Parameters.AddWithValue("@RSG_UserID", id);
+                    cmd.ExecuteNonQuery();
+                }
+
+            }
+            return RedirectToAction("AdminList");
+        }
 
     }
 }

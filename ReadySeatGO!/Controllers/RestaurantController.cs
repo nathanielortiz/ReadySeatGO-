@@ -37,6 +37,8 @@ namespace ReadySeatGO_.Controllers
             return list;
         }
 
+        // Restaurant Application for Patron (User Types)
+        // Patrons can apply to have their Restaurant added to the system
         public ActionResult Add()
         {
             RestaurantModel Chuu2 = new RestaurantModel();
@@ -53,7 +55,8 @@ namespace ReadySeatGO_.Controllers
                     (@RSG_UserID, @RSG_CatID, @RSG_ApprovalID, @RSG_RName, @RSG_Address,
                     @RSG_ContactNumber, @RSG_IsFeatured, @RSG_Manager,
                     @RSG_Branch, @RSG_OperatingHours, @RSG_Image, @RSG_Status, @RSG_TotalSeats, 
-                    @RSG_DateAdded, @RSG_DateModified)"; //@RSG_Image
+                    @RSG_DateAdded, @RSG_DateModified)";
+
                 using (SqlCommand WickedEye = new SqlCommand(Takanashi, Rikka))
                 {
                     WickedEye.Parameters.AddWithValue("@RSG_UserID", Session["userid"].ToString());
@@ -63,7 +66,7 @@ namespace ReadySeatGO_.Controllers
                     WickedEye.Parameters.AddWithValue("@RSG_RName", Chuu2.Restaurant);
                     WickedEye.Parameters.AddWithValue("@RSG_Address", Chuu2.Address);
                     WickedEye.Parameters.AddWithValue("@RSG_ContactNumber", Chuu2.Phone);
-                    
+
 
                     WickedEye.Parameters.AddWithValue("@RSG_IsFeatured", "No");
                     WickedEye.Parameters.AddWithValue("@RSG_Manager", Chuu2.Manager);
@@ -83,14 +86,17 @@ namespace ReadySeatGO_.Controllers
                     WickedEye.Parameters.AddWithValue("@RSG_DateAdded", DateTime.Now);
                     WickedEye.Parameters.AddWithValue("@RSG_DateModified", DBNull.Value);
                     WickedEye.ExecuteNonQuery();
+
                     // Redirect to index
                     return RedirectToAction("Index");
+
                 }
             }
 
 
 
         }
+
 
         //public List<RatingsModel> GetRatings()
         //{

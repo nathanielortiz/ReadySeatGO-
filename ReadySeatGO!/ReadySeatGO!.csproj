@@ -152,6 +152,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RestaurantController.cs" />
+    <Compile Include="Controllers\RestaurantViewController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -160,6 +161,7 @@
     <Compile Include="Models\CategoriesModel.cs" />
     <Compile Include="Models\RatingsModel.cs" />
     <Compile Include="Models\RestaurantModel.cs" />
+    <Compile Include="Models\RestaurantViewModel.cs" />
     <Compile Include="Models\UsersModel.cs" />
     <Compile Include="Models\UserTypeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -214,6 +216,11 @@
     <Content Include="Views\Admin\UserList.cshtml" />
     <Content Include="Views\Admin\PendingRestaurantApplication.cshtml" />
     <Content Include="Views\Admin\RestaurantList.cshtml" />
+    <Content Include="Views\Admin\AddAdmin.cshtml" />
+    <Content Include="Views\Admin\AdminList.cshtml" />
+    <Content Include="Views\Admin\UserDetails.cshtml" />
+    <Content Include="Views\RestaurantView\Index.cshtml" />
+    <Content Include="Views\RestaurantView\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

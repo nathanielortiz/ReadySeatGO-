@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<ReadySeatGO_.Models.UsersModel>
 
 @{
-    ViewBag.Title = "UserList";
+    ViewBag.Title = "Admin List";
 }
 
-<h2>User List</h2>
+<h2>Admin List</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -76,7 +76,7 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.UserID }) |
                 @Html.ActionLink("Details", "UserDetails", new { id = item.UserID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.UserID })
+                @Html.ActionLink("Archive", "ArchiveAdmin", new { id = item.UserID })
             </td>
         </tr>
     }
