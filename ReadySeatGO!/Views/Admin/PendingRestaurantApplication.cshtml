@@ -1,13 +1,14 @@
 ﻿@model IEnumerable<ReadySeatGO_.Models.RestaurantModel>
 
 @{
+    Layout = "~/Views/Shared/_Layout Admin.cshtml";
     ViewBag.Title = "PendingRestaurantApplication";
 }
 
 <h2>Pending Restaurant Application</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+   
 </p>
 <table class="table">
     <tr>
@@ -91,3 +92,5 @@
 }
 
 </table>
+<a class="btn btn-default" href="~/Home/AdminHome">Go Back &raquo;</a>
+

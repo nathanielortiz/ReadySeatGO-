@@ -1,5 +1,6 @@
 ﻿
 @{
+    Layout = "~/Views/Shared/_Layout Admin.cshtml";
     ViewBag.Title = "View";
 }
 
@@ -26,27 +27,73 @@
 </div>*@
 
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ADMIN POWWWWWUH</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+    <h2>Welcome Admin</h2>
+    <p class="lead">This is your Admin Homepage</p>
+    
+    <div class="w3-content w3-display-container">
+
+        <div class="w3-display-container mySlides">
+            <img src="http://d1dzqwexhp5ztx.cloudfront.net/imageRepo/4/0/80/27/139/IMG_0020_1_2_S.jpg" style="width:100%">
+            <div class="w3-display-bottomleft w3-large w3-container w3-padding-16 w3-black">
+                <a href="~/Admin/RestaurantList">Restaurant list</a>
+            </div>
+        </div>
+
+        <div class="w3-display-container mySlides">
+            <img src="https://cdn-images-1.medium.com/max/1585/1*ztxHHEoRGpC7RdHHh-jhpA.jpeg" style="width:100%">
+            <div class="w3-display-bottomleft w3-large w3-container w3-padding-16 w3-black">
+                <a href="~/Admin/PendingRestaurantApplication">Pending Restaurant Applications</a>
+            </div>
+        </div>
+
+
+
+      
+
+        <button class="w3-button w3-display-left w3-black" onclick="plusDivs(-1)">&#10094;</button>
+        <button class="w3-button w3-display-right w3-black" onclick="plusDivs(1)">&#10095;</button>
+
+    </div>
+ 
+    <script>
+        var slideIndex = 1;
+        showDivs(slideIndex);
+
+        function plusDivs(n) {
+            showDivs(slideIndex += n);
+        }
+
+        function showDivs(n) {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            if (n > x.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = x.length };
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            x[slideIndex - 1].style.display = "block";
+        }
+
+    </script>
+        </div>
+
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
+        <h2>Add Admin</h2>
         <p>
-           ADMIN HOMEPAGE
+           You may Add another Admin on this link below
         </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        <p><a class="btn btn-default" href="~/Admin/AddAdmin">Add Admin &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <h2>View Admin List</h2>
+        <p>View the list of admins added in the database.</p>
+        <p><a class="btn btn-default" href="~/Admin/AdminList">View List &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        <h2>View User List</h2>
+        <p>View the listed User admin, patrons and owners are on this list.</p>
+        <p><a class="btn btn-default" href="~/Admin/UserList">View List &raquo;</a></p>
     </div>
 </div>

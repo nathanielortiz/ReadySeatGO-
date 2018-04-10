@@ -207,7 +207,6 @@
     <Content Include="Views\Home\SignUp.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\HomePageUser.cshtml" />
-    <Content Include="Views\Admin\Home.cshtml" />
     <Content Include="Views\Home\HomePageAdmin.cshtml" />
     <Content Include="Views\Home\HomePageOwner.cshtml" />
     <Content Include="Views\Users\Contact.cshtml" />
@@ -221,6 +220,7 @@
     <Content Include="Views\Admin\UserDetails.cshtml" />
     <Content Include="Views\RestaurantView\Index.cshtml" />
     <Content Include="Views\RestaurantView\Details.cshtml" />
+    <Content Include="Views\Shared\_Layout Admin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

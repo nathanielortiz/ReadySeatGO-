@@ -1,15 +1,17 @@
 ﻿@model IEnumerable<ReadySeatGO_.Models.UsersModel>
 
 @{
+    Layout = "~/Views/Shared/_Layout Admin.cshtml";
     ViewBag.Title = "Admin List";
 }
 
 <h2>Admin List</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "AddAdmin")
 </p>
-<table class="table">
+
+<table class="table" >
     <tr>
 
         <th>
@@ -82,3 +84,4 @@
     }
 
 </table>
+<a class="btn btn-default" href="~/Home/AdminHome">Go Back &raquo;</a>
