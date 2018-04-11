@@ -205,6 +205,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\SignUp.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
@@ -222,10 +223,8 @@
     <Content Include="Views\Admin\UserDetails.cshtml" />
     <Content Include="Views\RestaurantView\Index.cshtml" />
     <Content Include="Views\RestaurantView\Details.cshtml" />
+    <Content Include="Views\Shared\_Layout Admin.cshtml" />
     <Content Include="Views\Admin\Details.cshtml" />
-    <Content Include="Views\Home\Logout.cshtml" />
-    <Content Include="Views\Home\Sample.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

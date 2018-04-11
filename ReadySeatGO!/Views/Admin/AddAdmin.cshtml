@@ -1,7 +1,7 @@
 ﻿@model ReadySeatGO_.Models.UsersModel
 
 @{
-
+    Layout = "~/Views/Shared/_Layout Admin.cshtml";
     ViewBag.Title = "Add Admin";
 }
 
@@ -87,7 +87,9 @@
     </div>
 }
 
-
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
 <a class="btn btn-default" href="~/Home/AdminHome">Go Back &raquo;</a>
 
 @section Scripts {
