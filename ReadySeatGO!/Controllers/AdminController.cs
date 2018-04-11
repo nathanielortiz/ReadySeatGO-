@@ -119,7 +119,7 @@ namespace ReadySeatGO_.Controllers
             using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
             {
                 Rikka.Open();
-                string Takanashi = @"SELECT r.RSG_RID, r.RSG_RName, r.RSG_IsFeatured, r.RSG_Address, r.RSG_ContactNumber, r.RSG_OperatingHours,
+                string Takanashi = @"SELECT r.RSG_RID, r.RSG_RName, r.RSG_Address, r.RSG_ContactNumber, r.RSG_OperatingHours,
                     r.RSG_Manager, r.RSG_Branch, r.RSG_TotalSeats,
                     u.RSG_Username, c.RSG_Category, a.RSG_Description
                     FROM RSG_Restaurants AS r
@@ -139,7 +139,6 @@ namespace ReadySeatGO_.Controllers
                             {
                                 RestaurantID = int.Parse(Nibutani["RSG_RID"].ToString()),
                                 UserName = Nibutani["RSG_UserName"].ToString(),
-                                IsFeatured = Nibutani["RSG_IsFeatured"].ToString(),
                                 Restaurant = Nibutani["RSG_RName"].ToString(),
                                 Address = Nibutani["RSG_Address"].ToString(),
                                 Phone = Nibutani["RSG_ContactNumber"].ToString(),
@@ -216,42 +215,18 @@ namespace ReadySeatGO_.Controllers
             using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
             {
                 Rikka.Open();
-                string Takanashi = @"UPDATE RSG_Restaurants SET RSG_IsFeatured=@RSG_IsFeatured 
+                string Takanashi = @"UPDATE RSG_Restaurant SET RSG_IsFeatured=@RSG_IsFeatured,
                     WHERE RSG_RID=@RSG_RID";
                 using (SqlCommand cmd = new SqlCommand(Takanashi, Rikka))
                 {
-                    cmd.Parameters.AddWithValue("@RSG_IsFeatured", "Yes");
+                    cmd.Parameters.AddWithValue("@RSG_IsFeatured", "Featured");
                     cmd.Parameters.AddWithValue("@RSG_RID", id);
                     cmd.ExecuteNonQuery();
                 }
 
             }
-            return RedirectToAction("RestaurantList");
+            return RedirectToAction("AdminList");
         }
-
-        // Remove Restaurant as Featured
-
-        public ActionResult RemoveFeatured(int? id)
-        {
-            if (id == null)
-                return RedirectToAction("RestaurantList");
-
-            using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
-            {
-                Rikka.Open();
-                string Takanashi = @"UPDATE RSG_Restaurants SET RSG_IsFeatured=@RSG_IsFeatured 
-                    WHERE RSG_RID=@RSG_RID";
-                using (SqlCommand cmd = new SqlCommand(Takanashi, Rikka))
-                {
-                    cmd.Parameters.AddWithValue("@RSG_IsFeatured", "No");
-                    cmd.Parameters.AddWithValue("@RSG_RID", id);
-                    cmd.ExecuteNonQuery();
-                }
-
-            }
-            return RedirectToAction("RestaurantList");
-        }
-
 
         // View Pending Restaurant Application List
         public ActionResult PendingRestaurantApplication()
