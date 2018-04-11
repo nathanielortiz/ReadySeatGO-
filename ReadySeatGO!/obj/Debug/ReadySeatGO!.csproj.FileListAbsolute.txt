@@ -181,7 +181,6 @@ C:\Users\ASUS\Documents\GitHub\ReadySeatGO!\ReadySeatGO!\bin\Microsoft.AI.Depend
 C:\Users\ASUS\Documents\GitHub\ReadySeatGO!\ReadySeatGO!\bin\Microsoft.AI.ServerTelemetryChannel.xml
 C:\Users\ASUS\Documents\GitHub\ReadySeatGO!\ReadySeatGO!\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\ASUS\Documents\GitHub\ReadySeatGO!\ReadySeatGO!\bin\Microsoft.AI.Web.xml
-C:\Users\ASUS\Documents\GitHub\ReadySeatGO!\ReadySeatGO!\obj\Debug\ReadySeatGO!.csprojResolveAssemblyReference.cache
 C:\Users\ASUS\Documents\GitHub\ReadySeatGO!\ReadySeatGO!\obj\Debug\ReadySeatGO!.dll
 C:\Users\ASUS\Documents\GitHub\ReadySeatGO!\ReadySeatGO!\obj\Debug\ReadySeatGO!.pdb
 C:\Users\darkh\Documents\GitHub\ReadySeatGO-\ReadySeatGO!\bin\ApplicationInsights.config
@@ -278,3 +277,4 @@ C:\Users\darkh\Documents\GitHub\ReadySeatGO-\ReadySeatGO!\obj\Debug\ReadySeatGO!
 C:\Users\darkh\Documents\GitHub\ReadySeatGO-\ReadySeatGO!\obj\Debug\ReadySeatGO!.csproj.CopyComplete
 C:\Users\darkh\Documents\GitHub\ReadySeatGO-\ReadySeatGO!\obj\Debug\ReadySeatGO!.dll
 C:\Users\darkh\Documents\GitHub\ReadySeatGO-\ReadySeatGO!\obj\Debug\ReadySeatGO!.pdb
+C:\Users\ASUS\Documents\GitHub\ReadySeatGO!\ReadySeatGO!\obj\Debug\ReadySeatGO!.csprojResolveAssemblyReference.cache

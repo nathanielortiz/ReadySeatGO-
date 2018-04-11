@@ -82,7 +82,10 @@ namespace ReadySeatGO_.Controllers
             return View();
         }
 
-
+        public ActionResult Sample()
+        {
+            return View();
+        }
 
         //HomePage Variations between Users
         //Different Users have different homepages
@@ -94,7 +97,30 @@ namespace ReadySeatGO_.Controllers
             if (Session["userid"] == null) // user has not logged in
                 return RedirectToAction("Login");
 
-            return View("HomePageUser");
+            var list = new List<RestaurantModel>();
+
+            using (SqlConnection con = new SqlConnection(Dekomori.GetConnection()))
+            {
+                con.Open();
+                string cheese = @"SELECT RSG_RID ,RSG_Image FROM RSG_Restaurants WHERE RSG_IsFeatured= 'Yes'";
+                using (SqlCommand com = new SqlCommand(cheese, con))
+                {
+                    //com.Parameters.AddWithValue("@Is", "Yes");
+                    using (SqlDataReader dr = com.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            list.Add(new RestaurantModel
+                            {
+                                Image = dr["RSG_Image"].ToString(),
+                                RestaurantID = int.Parse(dr["RSG_RID"].ToString())
+                            });
+                        }
+                    }
+                }
+            }
+            
+            return View("HomePageUser",list);
         }
 
         //Admin - UserType #2
@@ -113,11 +139,37 @@ namespace ReadySeatGO_.Controllers
         {
             if (Session["userid"] == null) // user has not logged in
                 return RedirectToAction("Login");
+            var list = new List<RestaurantModel>();
 
-            return View("HomePageOwner");
+            using (SqlConnection con = new SqlConnection(Dekomori.GetConnection()))
+            {
+                con.Open();
+                string cheese = @"SELECT RSG_RID ,RSG_Image FROM RSG_Restaurants WHERE RSG_IsFeatured= 'Yes'";
+                using (SqlCommand com = new SqlCommand(cheese, con))
+                {
+                    //com.Parameters.AddWithValue("@Is", "Yes");
+                    using (SqlDataReader dr = com.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            list.Add(new RestaurantModel
+                            {
+                                Image = dr["RSG_Image"].ToString(),
+                                RestaurantID = int.Parse(dr["RSG_RID"].ToString())
+                            });
+                        }
+                    }
+                }
+            }
+
+            return View("HomePageOwner", list);
         }
 
-
+        public ActionResult LogOut()
+        {
+            Session.Clear();
+            return RedirectToAction("Login");
+        }
 
         public ActionResult Login()
         {
@@ -158,7 +210,7 @@ namespace ReadySeatGO_.Controllers
                             }
                             else if (Session["typeid"].ToString() == "3")
                             {
-                                return RedirectToAction("UserHome");
+                                return RedirectToAction("OwnerHome");
                             }
                             else
                             {
@@ -177,6 +229,31 @@ namespace ReadySeatGO_.Controllers
 
             }
         }
+        //public ActionResult UserHome()
+        //{
+        //    var list = new List<RestaurantModel>();
+        //    using (SqlConnection con = new SqlConnection(Dekomori.GetConnection()))
+        //    {
+        //        con.Open();
+        //        string cheese = @"SELECT RSG_Image FROM RSG_Restaurants WHERE RSG_IsFeatured= 'Yes'";
+        //        using (SqlCommand com = new SqlCommand(cheese, con))
+        //        {
+        //            //com.Parameters.AddWithValue("@Is", "Yes");
+        //            using (SqlDataReader dr = com.ExecuteReader())
+        //            {
+        //                while (dr.Read())
+        //                {
+        //                    list.Add(new RestaurantModel
+        //                    {
+        //                        Image = dr["RSG_Image"].ToString()
+        //                    });
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return View(list);
+
+        //}
 
 
     }
