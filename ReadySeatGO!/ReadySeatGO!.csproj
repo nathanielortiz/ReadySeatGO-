@@ -159,6 +159,9 @@
     </Compile>
     <Compile Include="Models\ApprovalModel.cs" />
     <Compile Include="Models\CategoriesModel.cs" />
+    <Compile Include="Models\FavoritesModel.cs" />
+    <Compile Include="Models\CheckOutModel.cs" />
+    <Compile Include="Models\CheckInModel.cs" />
     <Compile Include="Models\RatingsModel.cs" />
     <Compile Include="Models\RestaurantModel.cs" />
     <Compile Include="Models\RestaurantViewModel.cs" />
@@ -221,6 +224,7 @@
     <Content Include="Views\RestaurantView\Index.cshtml" />
     <Content Include="Views\RestaurantView\Details.cshtml" />
     <Content Include="Views\Shared\_Layout Admin.cshtml" />
+    <Content Include="Views\Admin\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

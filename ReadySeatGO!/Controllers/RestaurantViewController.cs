@@ -150,5 +150,50 @@ namespace ReadySeatGO_.Controllers
             }
         }
 
+        // Check-In for Patron(s)
+        public ActionResult CheckIn(int? id)
+        {
+            if (id == null)
+                return RedirectToAction("Index");
+
+            using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
+            {
+                Rikka.Open();
+                string Takanashi = @"INSERT INTO RSG_CheckIn VALUES (@RSG_UserID, @RSG_RID, @RSG_Remarks, @RSG_DateAdded)";
+                using (SqlCommand cmd = new SqlCommand(Takanashi, Rikka))
+                {
+                    cmd.Parameters.AddWithValue("@RSG_UserID", Session["userid"].ToString());
+                    cmd.Parameters.AddWithValue("@RSG_RID", id);
+                    cmd.Parameters.AddWithValue("@RSG_Remarks", "Check-in");
+                    cmd.Parameters.AddWithValue("@RSG_DateAdded", DateTime.Now);
+                    cmd.ExecuteNonQuery();
+                }
+
+            }
+            return RedirectToAction("AdminList");
+        }
+
+        // Add to Favorite for Patron(s)
+        public ActionResult AddtoFavorite(int? id)
+        {
+            if (id == null)
+                return RedirectToAction("Index");
+
+            using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
+            {
+                Rikka.Open();
+                string Takanashi = @"INSERT INTO RSG_Favorites VALUES (@RSG_UserID, @RSG_RID, @RSG_Remarks, @RSG_DateAdded)";
+                using (SqlCommand cmd = new SqlCommand(Takanashi, Rikka))
+                {
+                    cmd.Parameters.AddWithValue("@RSG_UserID", Session["userid"].ToString());
+                    cmd.Parameters.AddWithValue("@RSG_RID", id);
+                    cmd.Parameters.AddWithValue("@RSG_DateAdded", DateTime.Now);
+                    cmd.ExecuteNonQuery();
+                }
+
+            }
+            return RedirectToAction("AdminList");
+        }
+
     }
 }

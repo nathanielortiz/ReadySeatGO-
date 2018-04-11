@@ -157,6 +157,77 @@ namespace ReadySeatGO_.Controllers
             return View(list);
         }
 
+        // View Restaurant Details
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+
+            }
+
+            var Chuu2 = new RestaurantModel();
+            using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
+            {
+                Rikka.Open();
+                string Takanashi = @"SELECT r.RSG_RName, r.RSG_Image, r.RSG_RName, u.RSG_Username, r.RSG_OperatingHours, c.RSG_CatID FROM RSG_Restaurants r INNER JOIN RSG_Categories c ON r.RSG_CatID = c.RSG_CatID
+                               INNER JOIN RSG_Users u ON r.RSG_UserID = u.RSG_UserID 
+                               WHERE r.RSG_RID = @RID";
+
+                //"SELECT r.RSG_RID, r.RSG_Image, r.RSG_RName, u.RSG_Username, r.RSG_OperatingHours, c.RSG_Category FROM RSG_Restaurants r " +
+                //"INNER JOIN RSG_Users u ON r.RSG_UserID = u.RSG_UserID " +
+                //"INNER JOIN RSG_Categories c ON r.RSG_CatID = c.RSG_CatID"
+
+                using (SqlCommand WickedEye = new SqlCommand(Takanashi, Rikka))
+                {
+                    WickedEye.Parameters.AddWithValue("@RID", id);
+                    using (SqlDataReader Nibutani = WickedEye.ExecuteReader())
+                    {
+                        if (Nibutani.HasRows)
+                        {
+                            while (Nibutani.Read())
+                            {
+                                Chuu2.Restaurant = Nibutani["RSG_RName"].ToString();
+                                Chuu2.Image = Nibutani["RSG_Image"].ToString();
+                                Chuu2.Restaurant = Nibutani["RSG_RName"].ToString();
+                                Chuu2.UserName = Nibutani["RSG_Username"].ToString();
+                                Chuu2.OperatingHours = Nibutani["RSG_OperatingHours"].ToString();
+                                Chuu2.CatID = int.Parse(Nibutani["RSG_CatID"].ToString());
+                            }
+
+                            return View(Chuu2);
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index");
+                        }
+                    }
+                }
+            }
+        }
+
+        // Set Restaurant as Featured
+        public ActionResult SetFeatured(int? id)
+        {
+            if (id == null)
+                return RedirectToAction("RestaurantList");
+
+            using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
+            {
+                Rikka.Open();
+                string Takanashi = @"UPDATE RSG_Restaurant SET RSG_IsFeatured=@RSG_IsFeatured,
+                    WHERE RSG_RID=@RSG_RID";
+                using (SqlCommand cmd = new SqlCommand(Takanashi, Rikka))
+                {
+                    cmd.Parameters.AddWithValue("@RSG_IsFeatured", "Featured");
+                    cmd.Parameters.AddWithValue("@RSG_RID", id);
+                    cmd.ExecuteNonQuery();
+                }
+
+            }
+            return RedirectToAction("AdminList");
+        }
+
         // View Pending Restaurant Application List
         public ActionResult PendingRestaurantApplication()
         {
