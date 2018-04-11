@@ -22,6 +22,9 @@
             @Html.DisplayNameFor(model => model.UserName)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.IsFeatured)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Address)
         </th>
 
@@ -61,6 +64,9 @@
             @Html.DisplayFor(modelItem => item.UserName)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.IsFeatured)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Address)
         </td>
 
@@ -87,8 +93,14 @@
         </td>
 
         <td>
-            @Html.ActionLink("Approve", "ApproveApplication", new { id=item.RestaurantID }) |
-            @Html.ActionLink("Reject", "RejectApplication", new { id=item.RestaurantID }) |
+            <div class="btn btn-default">
+                @Html.ActionLink("Set as Featured", "SetFeatured", new { id = item.RestaurantID })
+            </div>
+        </td>
+        <td>
+            <div class="btn btn-default">
+                @Html.ActionLink("Remove as Featured", "RemoveFeatured", new { id = item.RestaurantID })
+            </div>
         </td>
     </tr>
 }
