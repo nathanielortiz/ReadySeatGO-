@@ -379,7 +379,7 @@ namespace ReadySeatGO_.Controllers
                         WickedEye.Parameters.AddWithValue("@RSG_UserTypeID", 2);
 
                         WickedEye.ExecuteNonQuery();
-                        return RedirectToAction("Home");
+                        return RedirectToAction("AdminList");
                     }
                 }
 

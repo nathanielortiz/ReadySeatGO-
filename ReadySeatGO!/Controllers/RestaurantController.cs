@@ -88,7 +88,7 @@ namespace ReadySeatGO_.Controllers
                     WickedEye.ExecuteNonQuery();
 
                     // Redirect to index
-                    return RedirectToAction("Index");
+                    return RedirectToAction("OwnerHome","Home");
 
                 }
             }
@@ -134,6 +134,10 @@ namespace ReadySeatGO_.Controllers
         //    }
         //    return list;
         //}
+
+
+         
+
     }
 
 
