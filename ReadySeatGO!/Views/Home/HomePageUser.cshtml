@@ -15,6 +15,11 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
+@if (Session["userid"] == null )
+{
+    Response.Redirect("~/Home/Home");
+}
+
 
 <h2 class="w3-center">Welcome Patron!</h2>
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -24,16 +29,14 @@
         {
             if (x == 0)
             {
-            <li data-target="#carousel-example-generic" data-slide-to="@x" class="active"  ></li>
+                <li data-target="#carousel-example-generic" data-slide-to="@x" class="active"></li>
             }
             else
             {
                 <li data-target="#carousel-example-generic" data-slide-to="@x"></li>
             }
         }
-
     </ol>
-
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
         @{bool firstRecord = true;
@@ -53,14 +56,14 @@
                 {
                     <div class="item">
                         <a href="@Url.Action("Details", "RestaurantView", new { id = item.RestaurantID })">
-                            <img src="../../Images/Restaurants/@item.Image" alt="..."style="width:10000px;height:700px;">
+                            <img src="../../Images/Restaurants/@item.Image" alt="..." style="width:10000px;height:700px;">
                         </a>
                     </div>
                 }
 
             }
         }}
-      
+
         <!-- Controls -->
         <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -72,10 +75,8 @@
         </a>
     </div>
 
-</div>
-
-@*<div class="jumbotron">
-    <h2 class="w3-center">Welcome Patron!</h2>*@
+    @*<div class="jumbotron">
+        <h2 class="w3-center">Welcome Patron!</h2>*@
     @*@foreach (var item in Model)
         {
             <div class="w3-content w3-section">
@@ -121,31 +122,31 @@
 
 
 
-@*</div>*@
-
-
-
-
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Go to Favorites</h2>
-        <p>
-            Bookmark you favorite restaurant without ever navigating it to the menu
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Go &raquo;</a></p>
     </div>
-    <div class="col-md-4">
-        <h2>Go to Restaurant Menu</h2>
-        <p>To Reserve the Restaurant of your choosing.</p>
-        <p><a class="btn btn-default" href="~/RestaurantView/Index">Go &raquo;</a></p>
+
+
+
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Go to Favorites</h2>
+            <p>
+                Bookmark you favorite restaurant without ever navigating it to the menu
+            </p>
+            <p><a class="btn btn-default" href="~/RestaurantView/ViewFavorites">Go &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Go to Restaurant Menu</h2>
+            <p>To Reserve the Restaurant of your choosing.</p>
+            <p><a class="btn btn-default" href="~/RestaurantView/Index">Go &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Wanna be an owner</h2>
+            <p>Go here to add another Restaurant.</p>
+            <p><a class="btn btn-default" href="~/Restaurant/Add">Learn more &raquo;</a></p>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Wanna be an owner</h2>
-        <p>Go here to add another Restaurant.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
-<script>
-    $('.carousel').carousel()
-</script>
+    <script>
+        $('.carousel').carousel()
+    </script>

@@ -110,7 +110,11 @@ namespace ReadySeatGO_.Controllers
             }
 
         }
-
+        public ActionResult LogOut()
+        {
+            Session.Clear();
+            return RedirectToAction("Login","Home");
+        }
 
         // Restaurant List
         public ActionResult RestaurantList()
@@ -515,7 +519,7 @@ namespace ReadySeatGO_.Controllers
             using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
             {
                 Rikka.Open();
-                string Takanashi = @"UPDATE RSG_Users SET RSG_Status=@RSG_Status,
+                string Takanashi = @"UPDATE RSG_Users SET RSG_Status=@RSG_Status
                     WHERE RSG_UserID=@RSG_UserID";
                 using (SqlCommand cmd = new SqlCommand(Takanashi, Rikka))
                 {
@@ -527,6 +531,8 @@ namespace ReadySeatGO_.Controllers
             }
             return RedirectToAction("AdminList");
         }
+
+
 
     }
 }

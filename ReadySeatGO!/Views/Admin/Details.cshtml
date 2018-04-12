@@ -1,4 +1,9 @@
 ﻿@model ReadySeatGO_.Models.RestaurantModel
+@if (Session["userid"] == null )
+{
+    Response.Redirect("~/Home/Home");
+}
+
 
 @{
     ViewBag.Title = "Details";

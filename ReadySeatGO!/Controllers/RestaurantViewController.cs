@@ -182,25 +182,35 @@ namespace ReadySeatGO_.Controllers
             using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
             {
                 Rikka.Open();
-                string Takanashi = @"INSERT INTO RSG_Favorites VALUES (@RSG_UserID, @RSG_RID, @RSG_Remarks, @RSG_DateAdded)";
+                string Takanashi = @"INSERT INTO RSG_Favorites VALUES (@RSG_UserID, @RSG_RID, @RSG_DateAdded)";
                 using (SqlCommand cmd = new SqlCommand(Takanashi, Rikka))
                 {
                     cmd.Parameters.AddWithValue("@RSG_UserID", Session["userid"].ToString());
                     cmd.Parameters.AddWithValue("@RSG_RID", id);
+                    
                     cmd.Parameters.AddWithValue("@RSG_DateAdded", DateTime.Now);
                     cmd.ExecuteNonQuery();
                 }
 
             }
-            return RedirectToAction("AdminList");
+            return RedirectToAction("ViewFavorites","RestaurantView");
         }
 
         public ActionResult ViewFavorites()
         {
-            var list = new RestaurantViewModel();
-            list.Restaurants = GetFavoriteRestaurants();
-            list.Categories = GetCategories();
-            return View(list);
+            if (Session["userid"] == null)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                var list = new RestaurantViewModel();
+                list.Restaurants = GetFavoriteRestaurants();
+                list.Categories = GetCategories();
+                return View(list);
+
+            }
+             
         }
 
         // View Favorites
@@ -230,7 +240,7 @@ namespace ReadySeatGO_.Controllers
                 using (SqlCommand WickedEye = new SqlCommand(Takanashi, Rikka))
                 {
                     WickedEye.Parameters.AddWithValue("@CatID", Request.QueryString["c"] == null ? "0" : Request.QueryString["c"].ToString());
-                    WickedEye.Parameters.AddWithValue("@RSG_UID", 7);/*Session["userid"].ToString());*/
+                    WickedEye.Parameters.AddWithValue("@RSG_UID", Session["userid"].ToString());/*Session["userid"].ToString());*/
 
                     using (SqlDataReader Nibutani = WickedEye.ExecuteReader())
                     {
@@ -254,7 +264,11 @@ namespace ReadySeatGO_.Controllers
 
             return list;
         }
-
+        public ActionResult LogOut()
+        {
+            Session.Clear();
+            return RedirectToAction("Login", "Home");
+        }
         // Edit Favorites
         public ActionResult RemoveFavorite(int? id)
         {

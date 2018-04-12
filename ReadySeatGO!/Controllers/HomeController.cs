@@ -254,6 +254,70 @@ namespace ReadySeatGO_.Controllers
         //    return View(list);
 
         //}
+        public ActionResult Profile()
+        {
+            if (Session["userid"] == null)
+                return RedirectToAction("Login");
+            var record = new UsersModel();
+        
+                using (SqlConnection cheese = new SqlConnection(Dekomori.GetConnection()))
+                {
+                    cheese.Open();
+                    string query = @"SELECT RSG_Username,RSG_UPassword,RSG_Email,RSG_FirstName,RSG_LastName,
+                   RSG_Address,RSG_Mobile FROM RSG_Users WHERE RSG_UserID =@RG AND RSG_UserTypeID = @RTY";
+                    using (SqlCommand com = new SqlCommand(query,cheese))
+                    {
+                        com.Parameters.AddWithValue("@RG", Session["userid"].ToString());
+                        com.Parameters.AddWithValue("@RTY", Session["typeid"].ToString());
+                        using (SqlDataReader dr = com.ExecuteReader())
+                        {
+                            while (dr.Read())
+                            {
+                                record.Username = dr["RSG_Username"].ToString();
+                                record.UserPassword = dr["RSG_UPassword"].ToString();
+                                record.Email = dr["RSG_Email"].ToString();
+                                record.FirstName = dr["RSG_FirstName"].ToString();
+                                record.LastName = dr["RSG_LastName"].ToString();
+                                record.Address = dr["RSG_Address"].ToString();
+                                
+                                record.Mobile = dr["RSG_Mobile"].ToString();
+
+
+                            }
+                                return View(record);
+
+                         }
+
+                    }
+
+                } 
+        }
+        [HttpPost]
+        public ActionResult Profile(UsersModel record)
+        {
+            using(SqlConnection con = new SqlConnection(Dekomori.GetConnection()))
+            {
+                con.Open();
+                string query = "UPDATE RSG_Users SET RSG_Username= @U, RSG_UPassword=@RP, RSG_Email=@RE,RSG_FirstName=@FN, RSG_LastName=@LN, RSG_Address=@RA, RSG_Mobile=@RM , RSG_DateModified=@RD WHERE RSG_UserID=@User";
+                using (SqlCommand com = new SqlCommand(query, con))
+                {
+                    com.Parameters.AddWithValue("@U", record.Username);
+                    com.Parameters.AddWithValue("@RP", record.UserPassword);
+                    com.Parameters.AddWithValue("@RE", record.Email);
+                    com.Parameters.AddWithValue("@FN", record.FirstName);
+                    com.Parameters.AddWithValue("@LN", record.LastName);
+                    com.Parameters.AddWithValue("@RA", record.Address);
+                    com.Parameters.AddWithValue("@RM", record.Mobile);
+                    com.Parameters.AddWithValue("@RD", DateTime.Now);
+                    com.Parameters.AddWithValue("@User", Session["userid"].ToString());
+                    com.ExecuteNonQuery();
+                    ViewBag.Success = "<div class='alert alert-success col-lg-6'>Profile Updated </div>";
+                    return View(record);
+
+
+                }
+            }
+        }
 
 
     }

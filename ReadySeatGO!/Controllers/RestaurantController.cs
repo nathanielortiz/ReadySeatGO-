@@ -54,7 +54,7 @@ namespace ReadySeatGO_.Controllers
                 string Takanashi = @"INSERT INTO RSG_Restaurants VALUES
                     (@RSG_UserID, @RSG_CatID, @RSG_ApprovalID, @RSG_RName, @RSG_Address,
                     @RSG_ContactNumber, @RSG_IsFeatured, @RSG_Manager,
-                    @RSG_Branch, @RSG_OperatingHours, @RSG_Image, @RSG_Status, @RSG_TotalSeats, 
+                    @RSG_Branch, @RSG_OperatingHours,@RSG_Status , @RSG_Image, @RSG_TotalSeats, 
                     @RSG_DateAdded, @RSG_DateModified)";
 
                 using (SqlCommand WickedEye = new SqlCommand(Takanashi, Rikka))
@@ -134,9 +134,13 @@ namespace ReadySeatGO_.Controllers
         //    }
         //    return list;
         //}
+        public ActionResult LogOut()
+        {
+            Session.Clear();
+            return RedirectToAction("Login", "Home");
+        }
 
 
-         
 
     }
 

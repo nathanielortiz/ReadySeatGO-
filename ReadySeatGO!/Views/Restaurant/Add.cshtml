@@ -3,6 +3,11 @@
 @{
     ViewBag.Title = "Add";
 }
+@if (Session["userid"] == null  )
+{
+    Response.Redirect("~/Home/Home");
+}
+
 
 <h2>Restaurant Application</h2>
 

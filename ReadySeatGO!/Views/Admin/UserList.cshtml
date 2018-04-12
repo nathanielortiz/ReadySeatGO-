@@ -1,4 +1,9 @@
 ﻿@model IEnumerable<ReadySeatGO_.Models.UsersModel>
+@if (Session["userid"] == null)
+{
+    Response.Redirect("~/Home/Home");
+}
+
 
 @{
 

@@ -27,7 +27,7 @@ namespace ReadySeatGO_.Models
 
         [Display(Name = "Restaurant Name")]
         public string Restaurant { get; set; }
-
+        public string Remarks { get; set; }
         public DateTime DateAdded { get; set; }
 
     }

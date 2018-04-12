@@ -226,6 +226,8 @@
     <Content Include="Views\Home\Logout.cshtml" />
     <Content Include="Views\Home\Sample.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\RestaurantView\ViewFavorites.cshtml" />
+    <Content Include="Views\Home\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

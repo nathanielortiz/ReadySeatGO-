@@ -9,8 +9,12 @@
 <h2>Restaurant List</h2>
 
 <p>
-    
-    
+    @if(Session["userid"] == null)
+    {
+        Response.Redirect("~/Home/Home");
+    }
+
+
 </p>
 <table class="table">
     <tr>
