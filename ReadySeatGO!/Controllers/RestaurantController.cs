@@ -55,7 +55,12 @@ namespace ReadySeatGO_.Controllers
                     (@RSG_UserID, @RSG_CatID, @RSG_ApprovalID, @RSG_RName, @RSG_Address,
                     @RSG_ContactNumber, @RSG_IsFeatured, @RSG_Manager,
                     @RSG_Branch, @RSG_OperatingHours,@RSG_Status , @RSG_Image, @RSG_TotalSeats, 
-                    @RSG_DateAdded, @RSG_DateModified)";
+                    @RSG_DateAdded, @RSG_DateModified)
+
+
+                    UPDATE RSG_Users SET RSG_UserTypeID=2 WHERE RSG_UserID=@RSG_UserID";
+
+            
 
                 using (SqlCommand WickedEye = new SqlCommand(Takanashi, Rikka))
                 {

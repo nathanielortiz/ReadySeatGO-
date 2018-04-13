@@ -28,7 +28,7 @@ namespace ReadySeatGO_.Controllers
                     u.RSG_FirstName, u.RSG_Address, u.RSG_Status, u.RSG_Mobile
                     FROM RSG_Users u
                     INNER JOIN RSG_UserTypes t ON u.RSG_UserTypeID = t.RSG_UserTypeID
-                    WHERE u.RSG_Status!=@Status";
+                    WHERE u.RSG_Status!=@Status AND u.RSG_UserTypeID != 2";
                 using (SqlCommand WickedEye = new SqlCommand(Takanashi, Rikka))
                 {
                     WickedEye.Parameters.AddWithValue("@Status", "Archived");
@@ -115,6 +115,9 @@ namespace ReadySeatGO_.Controllers
             Session.Clear();
             return RedirectToAction("Login","Home");
         }
+
+        
+
 
         // Restaurant List
         public ActionResult RestaurantList()
@@ -303,9 +306,9 @@ namespace ReadySeatGO_.Controllers
 
         // Approve Restaurant Application from Patron (User Type)
         // If Approved -> User Type will change from Patron to Owner
-        public ActionResult ApproveApplication(int? id)
+        public ActionResult ApproveApplication(int? restaurantid)
         {
-            if (id == null)
+            if (restaurantid == null)
                 return RedirectToAction("RestaurantList");
 
             using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
@@ -313,12 +316,16 @@ namespace ReadySeatGO_.Controllers
                 Rikka.Open();
                 string Takanashi = @"UPDATE RSG_Restaurants SET RSG_ApprovalID=@RSG_ApprovalID, 
                     RSG_DateAdded=@DateAdded
-                    WHERE RSG_RID=@RSG_RID";
+                    WHERE RSG_RID=@RSG_RID
+                    
+                    UPDATE RSG_Users SET RSG_UserTypeID=@RSG_UserTypeID WHERE RSG_UserID@=RSG_UserID";
+
+                    
                 using (SqlCommand cmd = new SqlCommand(Takanashi, Rikka))
                 {
                     cmd.Parameters.AddWithValue("@RSG_ApprovalID", 2);
                     cmd.Parameters.AddWithValue("@DateAdded", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@RSG_RID", id);
+                    cmd.Parameters.AddWithValue("@RSG_RID", restaurantid);
                     cmd.ExecuteNonQuery();
                 }
 

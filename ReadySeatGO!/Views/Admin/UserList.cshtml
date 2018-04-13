@@ -77,9 +77,9 @@
                 @Html.DisplayFor(modelItem => item.DateModified)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.UserID }) |
+                @Html.ActionLink("Set to Owner", "SetToOwner", new { id = item.UserID }) |
+                @Html.ActionLink("Set to Patron", "SetToPatron", new { id = item.UserID }) |
                 @Html.ActionLink("Details", "UserDetails", new { id = item.UserID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.UserID })
             </td>
         </tr>
     }

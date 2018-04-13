@@ -114,13 +114,11 @@ namespace ReadySeatGO_.Controllers
             using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
             {
                 Rikka.Open();
-                string Takanashi = @"SELECT r.RSG_RName, r.RSG_Image, r.RSG_RName, u.RSG_Username, r.RSG_OperatingHours, c.RSG_CatID FROM RSG_Restaurants r INNER JOIN RSG_Categories c ON r.RSG_CatID = c.RSG_CatID
+                string Takanashi = @"SELECT r.RSG_RName, r.RSG_Image, r.RSG_RName, u.RSG_Username, r.RSG_OperatingHours, c.RSG_Category FROM RSG_Restaurants r INNER JOIN RSG_Categories c ON r.RSG_CatID = c.RSG_CatID
                                INNER JOIN RSG_Users u ON r.RSG_UserID = u.RSG_UserID 
                                WHERE r.RSG_RID = @RID";
 
-                //"SELECT r.RSG_RID, r.RSG_Image, r.RSG_RName, u.RSG_Username, r.RSG_OperatingHours, c.RSG_Category FROM RSG_Restaurants r " +
-                //"INNER JOIN RSG_Users u ON r.RSG_UserID = u.RSG_UserID " +
-                //"INNER JOIN RSG_Categories c ON r.RSG_CatID = c.RSG_CatID"
+
 
                 using (SqlCommand WickedEye = new SqlCommand(Takanashi, Rikka))
                 {
@@ -136,7 +134,7 @@ namespace ReadySeatGO_.Controllers
                                 Chuu2.Restaurant = Nibutani["RSG_RName"].ToString();
                                 Chuu2.UserName = Nibutani["RSG_Username"].ToString();
                                 Chuu2.OperatingHours = Nibutani["RSG_OperatingHours"].ToString();
-                                Chuu2.CatID = int.Parse(Nibutani["RSG_CatID"].ToString());
+                                Chuu2.Category = Nibutani["RSG_Category"].ToString();
                             }
 
                             return View(Chuu2);
@@ -149,7 +147,7 @@ namespace ReadySeatGO_.Controllers
                 }
             }
         }
-
+      
         // Check-In for Patron(s)
         public ActionResult CheckIn(int? id)
         {

@@ -11,8 +11,8 @@
 <h2>@Model.Restaurant (@Model.Category)</h2>
 
 <p>
-    Category: <a href='../Index?c=@Model.CatID'>@Model.Category</a>
-    <hr />
+    Category: @Model.Category
+    
 
 </p>
 <div class="col-lg-6">
@@ -20,14 +20,24 @@
 </div>
 
 <div class="col-lg-6">
+    <br/>
     <p>
-        @Model.OperatingHours
+        Operating Hours: @Model.OperatingHours
     </p>
     <p>
-        <h3>
-            @Model.UserName
-        </h3>
-
+        Owned By:@Model.UserName
+    </p>
+    <p>
+        Located at: @Model.Address
+    </p>
+    <p>
+        Total # of Seats: @Model.TotalSeats
+    </p>
+    <p>
+        @Model.Branch Branch
+    </p>
+    <p>
+        Contact #: @Model.Phone
     </p>
 
 </div>
