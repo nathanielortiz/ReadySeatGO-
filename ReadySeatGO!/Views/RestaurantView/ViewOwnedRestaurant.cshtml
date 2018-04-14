@@ -1,8 +1,7 @@
 ﻿@model ReadySeatGO_.Models.RestaurantViewModel
 
-
 @{
-    ViewBag.Title = "Store";
+    ViewBag.Title = "ViewOwnedRestaurant";
 }
 
 <div class="col-lg-3">
@@ -21,7 +20,7 @@
     </div>
 </div>
 <div class="col-lg-9">
-    <h1 class="text-center">Restaurants</h1>
+    <h1 class="text-center">My Favorites</h1>
     <hr />
     @foreach (var item in Model.Restaurants)
     {
@@ -38,8 +37,8 @@
 
                         </p>
                         <hr />
-                        <a href="@Url.Action("AddtoFavorite", "RestaurantView",  new { id=item.RestaurantID })" name="addtocart" class="btn btn-info btn btn-block"
-                           value="Add to Cart">Add To Favorites</a>
+                        <a href="@Url.Action("EditRestaurant", "Restaurant",  new { id=item.RestaurantID })" name="addtocart" class="btn btn-info btn btn-block"
+                           value="Add to Cart">Edit Info</a>
                     </div>
                 </div>
             </a>

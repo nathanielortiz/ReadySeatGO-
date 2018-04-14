@@ -58,7 +58,7 @@ namespace ReadySeatGO_.Controllers
                     @RSG_DateAdded, @RSG_DateModified)
 
 
-                    UPDATE RSG_Users SET RSG_UserTypeID=2 WHERE RSG_UserID=@RSG_UserID";
+                    UPDATE RSG_Users SET RSG_UserTypeID=3 WHERE RSG_UserID=@RSG_UserID";
 
             
 
@@ -85,7 +85,7 @@ namespace ReadySeatGO_.Controllers
 
                     // Upload the chosen file to images > products
                     image.SaveAs(Server.MapPath("~/Images/Restaurants/" + fileName));
-
+                    
                     WickedEye.Parameters.AddWithValue("@RSG_TotalSeats", Chuu2.TotalSeats);
                     WickedEye.Parameters.AddWithValue("@RSG_Status", "Nothing");
                     WickedEye.Parameters.AddWithValue("@RSG_DateAdded", DateTime.Now);
@@ -145,7 +145,97 @@ namespace ReadySeatGO_.Controllers
             return RedirectToAction("Login", "Home");
         }
 
+        public ActionResult EditRestaurant(int? id)
+        {
 
+           
+            if (Session["userid"] == null)
+                return RedirectToAction("Login", "Home");
+            if (int.Parse(Session["typeid"].ToString()) != 3)
+            {
+                Session.Clear();
+                return RedirectToAction("Login", "Home");
+            }
+
+
+            var rec = new RestaurantModel();
+            rec.Categories = GetCategories();
+            using (SqlConnection con = new SqlConnection(Dekomori.GetConnection()))
+            {
+                con.Open();
+                string query = @"SELECT RSG_RName,RSG_Address,RSG_ContactNumber
+                ,RSG_Manager,RSG_Branch,RSG_OperatingHours,
+                RSG_Status,RSG_Image,RSG_TotalSeats FROM RSG_Restaurants WHERE RSG_RID =@RG";
+                using (SqlCommand com = new SqlCommand(query, con))
+                {
+                    com.Parameters.AddWithValue("@RG", id);
+                    using (SqlDataReader dr = com.ExecuteReader())
+                    {
+                        if (dr.HasRows)
+                        {
+                            while (dr.Read())
+                            {
+                                rec.Restaurant = dr["RSG_RName"].ToString();
+                                rec.Address = dr["RSG_Address"].ToString();
+                                rec.Phone = dr["RSG_ContactNumber"].ToString();
+                                rec.Manager = dr["RSG_Manager"].ToString();
+                                rec.Branch = dr["RSG_Branch"].ToString();
+                                rec.OperatingHours = dr["RSG_OperatingHours"].ToString();
+                                rec.Status = dr["RSG_Status"].ToString();
+                                rec.Image = dr["RSG_Image"].ToString();
+                                rec.TotalSeats = dr["RSG_TotalSeats"].ToString();
+
+                            }
+                            return View(rec);
+                        }
+                        else
+                        {
+                            return RedirectToAction("OwnerHome", "Home");
+                        }
+                       
+                        
+                    }
+
+                }
+            }
+        }
+        [HttpPost]
+        public ActionResult EditRestaurant(RestaurantModel rec,int? id, HttpPostedFileBase image)
+        {
+            using (SqlConnection con = new SqlConnection(Dekomori.GetConnection()))
+            {
+                con.Open();
+                string query = @"UPDATE RSG_Restaurants SET RSG_CatID=@RCA, RSG_RName=@RN,RSG_Address=@RA,RSG_ContactNumber=@RC,
+                               RSG_Manager=@RM, RSG_Branch=@RB, RSG_OperatingHours=@RO,RSG_Status=@RS,RSG_Image=@RI,     
+                               RSG_TotalSeats=@RTS,RSG_DateModified=@RD WHERE RSG_RID=@RID";
+                using (SqlCommand com = new SqlCommand(query, con))
+                {
+                    com.Parameters.AddWithValue("@RCA", rec.CatID);
+                    com.Parameters.AddWithValue("@RN", rec.Restaurant);
+                    com.Parameters.AddWithValue("@RA", rec.Address);
+                    com.Parameters.AddWithValue("@RC", rec.Phone);
+                    com.Parameters.AddWithValue("@RM", rec.Manager);
+                    com.Parameters.AddWithValue("@RB", rec.Branch);
+                    com.Parameters.AddWithValue("@RO", rec.OperatingHours);
+                    com.Parameters.AddWithValue("@RS", rec.Status);
+                    string fileName = DateTime.Now.ToString("yyyyMMddHHmmss-") +
+                      image.FileName;
+                    com.Parameters.AddWithValue("@RI", fileName);
+
+
+                    // Upload the chosen file to images > products
+                    image.SaveAs(Server.MapPath("~/Images/Restaurants/" + fileName));
+                    com.Parameters.AddWithValue("@RTS", rec.TotalSeats);
+                    com.Parameters.AddWithValue("@RD", DateTime.Now);
+                    com.Parameters.AddWithValue("@RID", id);
+                    com.ExecuteNonQuery();
+                    ViewBag.Success = "<div class='alert alert-success col-lg-6'>Profile Updated </div>";
+                    return RedirectToAction("ViewOwnedRestaurant","RestaurantView");
+                    
+
+                }
+            }
+        }
 
     }
 

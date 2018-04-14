@@ -144,10 +144,10 @@ namespace ReadySeatGO_.Controllers
             using (SqlConnection con = new SqlConnection(Dekomori.GetConnection()))
             {
                 con.Open();
-                string cheese = @"SELECT RSG_RID ,RSG_Image FROM RSG_Restaurants WHERE RSG_IsFeatured= 'Yes'";
+                string cheese = @"SELECT RSG_RID ,RSG_Image FROM RSG_Restaurants WHERE RSG_UserID=@RID";
                 using (SqlCommand com = new SqlCommand(cheese, con))
                 {
-                    //com.Parameters.AddWithValue("@Is", "Yes");
+                    com.Parameters.AddWithValue("@RID", Session["userid"].ToString());
                     using (SqlDataReader dr = com.ExecuteReader())
                     {
                         while (dr.Read())

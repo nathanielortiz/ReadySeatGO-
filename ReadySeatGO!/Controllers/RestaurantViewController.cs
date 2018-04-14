@@ -19,7 +19,7 @@ namespace ReadySeatGO_.Controllers
             list.Categories = GetCategories();
             return View(list);
         }
-
+    
 
         public List<RestaurantModel> GetRestaurants()
         {
@@ -29,6 +29,7 @@ namespace ReadySeatGO_.Controllers
             {
                 Rikka.Open();
                 string Takanashi = @"";
+                                        
                 if (Request.QueryString["c"] == null)
                 {
                     Takanashi = "SELECT r.RSG_RID, r.RSG_Image, r.RSG_RName, u.RSG_Username, r.RSG_OperatingHours, c.RSG_Category FROM RSG_Restaurants r " +
@@ -286,6 +287,66 @@ namespace ReadySeatGO_.Controllers
 
             }
             return RedirectToAction("ViewFavorites");
+        }
+
+        public List<RestaurantModel> GetOwnedRestaurants()
+        {
+            var list = new List<RestaurantModel>();
+
+            using (SqlConnection con = new SqlConnection(Dekomori.GetConnection()))
+            {
+                con.Open();
+
+                string ow = "";
+
+                if (Request.QueryString["c"] == null)
+                {
+                    ow = "SELECT  r.RSG_RID, r.RSG_Image, r.RSG_RName, u.RSG_Username, r.RSG_OperatingHours, c.RSG_Category FROM RSG_Restaurants r  INNER JOIN RSG_Users u ON r.RSG_UserID = u.RSG_UserID INNER JOIN RSG_Categories c ON r.RSG_CatID = c.RSG_CatID WHERE r.RSG_UserID=@RU AND u.RSG_UserTypeID=@RUT";
+                }
+                else
+                {
+                    ow = "SELECT  r.RSG_RID, r.RSG_Image, r.RSG_RName, u.RSG_Username, r.RSG_OperatingHours, c.RSG_Category FROM RSG_Restaurants r INNER JOIN RSG_Users u ON r.RSG_UserID = u.RSG_UserID INNER JOIN RSG_Categories c ON r.RSG_CatID = c.RSG_CatID WHERE r.RSG_UserID = @RU AND u.RSG_UserTypeID = @RUT AND r.RSG_CatID = @RCI";
+                }         
+                using (SqlCommand com = new SqlCommand(ow, con))
+                {
+                    com.Parameters.AddWithValue("@RU", Session["userid"].ToString());
+                    com.Parameters.AddWithValue("@RUT",Session["typeid"].ToString());
+                    com.Parameters.AddWithValue("@RCI", Request.QueryString["c"] == null ? "0" : Request.QueryString["c"].ToString());
+                    using (SqlDataReader Nibutani = com.ExecuteReader())
+                    {
+                        while (Nibutani.Read())
+                        {
+                            list.Add(new RestaurantModel
+                            {
+                                RestaurantID = int.Parse(Nibutani["RSG_RID"].ToString()),
+                                Image = Nibutani["RSG_Image"].ToString(),
+                                Restaurant = Nibutani["RSG_RName"].ToString(),
+                                UserName = Nibutani["RSG_Username"].ToString(),
+                                Category = Nibutani["RSG_Category"].ToString(),
+                                OperatingHours = Nibutani["RSG_OperatingHours"].ToString(),
+                            });
+                        }
+                    }
+
+
+                }
+            }
+            return list;
+        }
+        public ActionResult ViewOwnedRestaurant()
+        {
+            if (Session["userid"] == null)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                var list = new RestaurantViewModel();
+                list.Restaurants = GetOwnedRestaurants();
+                list.Categories = GetCategories();
+                return View(list);
+            }
+
         }
 
 
