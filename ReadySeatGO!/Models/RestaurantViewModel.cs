@@ -10,6 +10,6 @@ namespace ReadySeatGO_.Models
         public List<RestaurantModel> Restaurants { get; set; }
         public List<CategoriesModel> Categories { get; set; }
         public List<RatingsModel> Ratings { get; set; }
-        
+        public List<CheckInModel> CheckIns { get; set; }
     }
 }

@@ -229,31 +229,8 @@ namespace ReadySeatGO_.Controllers
 
             }
         }
-        //public ActionResult UserHome()
-        //{
-        //    var list = new List<RestaurantModel>();
-        //    using (SqlConnection con = new SqlConnection(Dekomori.GetConnection()))
-        //    {
-        //        con.Open();
-        //        string cheese = @"SELECT RSG_Image FROM RSG_Restaurants WHERE RSG_IsFeatured= 'Yes'";
-        //        using (SqlCommand com = new SqlCommand(cheese, con))
-        //        {
-        //            //com.Parameters.AddWithValue("@Is", "Yes");
-        //            using (SqlDataReader dr = com.ExecuteReader())
-        //            {
-        //                while (dr.Read())
-        //                {
-        //                    list.Add(new RestaurantModel
-        //                    {
-        //                        Image = dr["RSG_Image"].ToString()
-        //                    });
-        //                }
-        //            }
-        //        }
-        //    }
-        //    return View(list);
 
-        //}
+        
         public ActionResult Profile()
         {
             if (Session["userid"] == null)

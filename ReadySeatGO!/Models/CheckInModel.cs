@@ -33,5 +33,7 @@ namespace ReadySeatGO_.Models
 
         public DateTime DateAdded { get; set; }
 
+        public int TotalCheckIn { get; set; }
+
     }
 }

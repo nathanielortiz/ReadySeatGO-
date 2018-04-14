@@ -11,15 +11,19 @@ namespace ReadySeatGO_.Controllers
 {
     public class RestaurantViewController : Controller
     {
+        
         // View Restaurants
         public ActionResult Index()
         {
             var list = new RestaurantViewModel();
             list.Restaurants = GetRestaurants();
             list.Categories = GetCategories();
+            
+
             return View(list);
         }
 
+        
 
         public List<RestaurantModel> GetRestaurants()
         {
@@ -31,14 +35,14 @@ namespace ReadySeatGO_.Controllers
                 string Takanashi = @"";
                 if (Request.QueryString["c"] == null)
                 {
-                    Takanashi = "SELECT r.RSG_RID, r.RSG_Image, r.RSG_RName, u.RSG_Username, r.RSG_OperatingHours, c.RSG_Category FROM RSG_Restaurants r " +
+                    Takanashi = "SELECT r.RSG_RID, r.RSG_Image, r.RSG_RName, u.RSG_Username, r.RSG_OperatingHours, r.RSG_TotalSeats, r.RSG_Status, c.RSG_Category FROM RSG_Restaurants r " +
                                 "INNER JOIN RSG_Users u ON r.RSG_UserID = u.RSG_UserID " +
                                 "INNER JOIN RSG_Categories c ON r.RSG_CatID = c.RSG_CatID";
                 }
 
                 else
                 {
-                    Takanashi = "SELECT r.RSG_RID, r.RSG_Image, r.RSG_RName, u.RSG_Username, r.RSG_OperatingHours, c.RSG_Category FROM RSG_Restaurants r " +
+                    Takanashi = "SELECT r.RSG_RID, r.RSG_Image, r.RSG_RName, u.RSG_Username, r.RSG_OperatingHours,r.RSG_TotalSeats, r.RSG_Status, c.RSG_Category FROM RSG_Restaurants r " +
                                 "INNER JOIN RSG_Users u ON r.RSG_UserID = u.RSG_UserID " +
                                 "INNER JOIN RSG_Categories c ON r.RSG_CatID = c.RSG_CatID WHERE r.RSG_CatID=@CatID";
 
@@ -59,10 +63,18 @@ namespace ReadySeatGO_.Controllers
                                 UserName = Nibutani["RSG_Username"].ToString(),
                                 Category = Nibutani["RSG_Category"].ToString(),
                                 OperatingHours = Nibutani["RSG_OperatingHours"].ToString(),
+                                TotalSeats = Nibutani["RSG_TotalSeats"].ToString(),
+                                Status = Nibutani["RSG_Status"].ToString()
 
                             });
                         }
+
+
                     }
+                    
+
+
+
                 }
 
 
@@ -70,6 +82,38 @@ namespace ReadySeatGO_.Controllers
 
             return list;
         }
+
+
+        //public List<CheckInModel> GetCheckIns()
+        //{
+        //    var list = new List<CheckInModel>();
+        //    using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
+        //    {
+        //        Rikka.Open();
+        //        string Takanashi = @"SELECT COUNT (RSG_LogID) AS TotalCheckIn FROM RSG_CheckIn WHERE RSG_RID=@RSG_ID";
+        //        using (SqlCommand WickedEye = new SqlCommand(Takanashi, Rikka))
+        //        {
+        //            using (SqlDataReader Nibutani = WickedEye.ExecuteReader())
+        //            {
+        //                while (Nibutani.Read())
+        //                {
+        //                    list.Add(new CheckInModel
+        //                    {
+        //                        CheckInID = int.Parse(Nibutani["RSG_LogID"].ToString()),
+        //                        TotalCheckIn = int.Parse(Nibutani["TotalCheckIn"].ToString()),
+        //                        RestaurantID = int.Parse(Nibutani["RSG_RID"].ToString())
+
+        //                    });
+        //                }
+        //            }
+        //            return list;
+
+        //        }
+
+        //    }
+        //}
+
+        
 
         public List<CategoriesModel> GetCategories()
         {
@@ -100,6 +144,31 @@ namespace ReadySeatGO_.Controllers
                 }
             }
         }
+
+
+
+
+
+        //double GetTotalCheckIns(int ? id)
+        //{
+        //    using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
+        //    {
+        //        Rikka.Open();
+        //        string Takanashi = @"SELECT Count(RSG_LogID) AS TotalCheckIns FROM RSG_CheckIn WHERE
+        //                            RSG_RID=@RID";
+        //        using (SqlCommand WickedEye = new SqlCommand(Takanashi, Rikka))
+        //        {
+        //            WickedEye.Parameters.AddWithValue("@RID", id);
+        //            return WickedEye.ExecuteScalar() == null ? 0 : Convert.ToDouble((decimal)WickedEye.ExecuteScalar());
+
+        //        }
+        //    }
+
+        //}
+
+
+
+
 
         // View Restaurant Details
         public ActionResult Details(int? id)
@@ -137,6 +206,10 @@ namespace ReadySeatGO_.Controllers
                                 Chuu2.Category = Nibutani["RSG_Category"].ToString();
                             }
 
+
+                            //ViewBag.Total = GetTotalCheckIns(id).ToString();
+
+
                             return View(Chuu2);
                         }
                         else
@@ -148,6 +221,8 @@ namespace ReadySeatGO_.Controllers
             }
         }
       
+
+
         // Check-In for Patron(s)
         public ActionResult CheckIn(int? id)
         {
@@ -168,7 +243,7 @@ namespace ReadySeatGO_.Controllers
                 }
 
             }
-            return RedirectToAction("AdminList");
+            return RedirectToAction("Index");
         }
 
         // Add to Favorite for Patron(s)
@@ -222,14 +297,14 @@ namespace ReadySeatGO_.Controllers
                 string Takanashi = @"";
                 if (Request.QueryString["c"] == null)
                 {
-                    Takanashi = "SELECT r.RSG_RID, r.RSG_RName, c.RSG_Category, r.RSG_OperatingHours, r.RSG_Image FROM RSG_Favorites f INNER JOIN RSG_Restaurants r ON f.RSG_RID = r.RSG_RID " +
+                    Takanashi = "SELECT r.RSG_RID, r.RSG_RName, c.RSG_Category, r.RSG_Image, r.RSG_OperatingHours, r.RSG_TotalSeats, r.RSG_Status FROM RSG_Favorites f INNER JOIN RSG_Restaurants r ON f.RSG_RID = r.RSG_RID " +
                                 "INNER JOIN RSG_Categories c ON r.RSG_CatID = c.RSG_CatID " +
                                 "INNER JOIN RSG_Users u ON f.RSG_UserID = u.RSG_UserID WHERE f.RSG_UserID = @RSG_UID";
                 }
 
                 else
                 {
-                    Takanashi = "SELECT r.RSG_RID, r.RSG_RName, c.RSG_Category, r.RSG_OperatingHours, r.RSG_Image FROM RSG_Favorites f INNER JOIN RSG_Restaurants r ON f.RSG_RID = r.RSG_RID " +
+                    Takanashi = "SELECT r.RSG_RID, r.RSG_RName, c.RSG_Category, r.RSG_Image, r.RSG_OperatingHours, r.RSG_TotalSeats, r.RSG_Status FROM RSG_Favorites f INNER JOIN RSG_Restaurants r ON f.RSG_RID = r.RSG_RID " +
                                 "INNER JOIN RSG_Categories c ON r.RSG_CatID = c.RSG_CatID " +
                                 "INNER JOIN RSG_Users u ON f.RSG_UserID = u.RSG_UserID WHERE f.RSG_UserID = @RSG_UID AND r.RSG_CatID=@CatID";
 
@@ -251,6 +326,8 @@ namespace ReadySeatGO_.Controllers
                                 Restaurant = Nibutani["RSG_RName"].ToString(),
                                 Category = Nibutani["RSG_Category"].ToString(),
                                 OperatingHours = Nibutani["RSG_OperatingHours"].ToString(),
+                                TotalSeats = Nibutani["RSG_TotalSeats"].ToString(),
+                                Status = Nibutani["RSG_Status"].ToString()
 
                             });
                         }

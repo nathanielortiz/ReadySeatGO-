@@ -87,7 +87,7 @@ namespace ReadySeatGO_.Controllers
                     image.SaveAs(Server.MapPath("~/Images/Restaurants/" + fileName));
 
                     WickedEye.Parameters.AddWithValue("@RSG_TotalSeats", Chuu2.TotalSeats);
-                    WickedEye.Parameters.AddWithValue("@RSG_Status", "Nothing");
+                    WickedEye.Parameters.AddWithValue("@RSG_Status", "Empty");
                     WickedEye.Parameters.AddWithValue("@RSG_DateAdded", DateTime.Now);
                     WickedEye.Parameters.AddWithValue("@RSG_DateModified", DBNull.Value);
                     WickedEye.ExecuteNonQuery();
