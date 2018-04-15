@@ -1,0 +1,147 @@
+﻿
+@{
+
+    ViewBag.Title = "View";
+}
+@if (Session["userid"] == null)
+{
+    Response.Redirect("~/Home/Home");
+}
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<h2 class="w3-center">Welcome Admin!</h2>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+@*<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Join us!", "Add", "Restaurant")</li>
+                <li>@Html.ActionLink("About", "About", "Home")</li>
+                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            </ul>
+        </div>
+
+    </div>
+
+</div>*@
+
+@*<div class="jumbotron">
+    <h2>Welcome Admin</h2>
+    <p class="lead">This is your Admin Homepage</p>
+    
+    <div class="w3-content w3-display-container">
+        <div class="w3-display-container mySlides">
+            <img src="http://d1dzqwexhp5ztx.cloudfront.net/imageRepo/4/0/80/27/139/IMG_0020_1_2_S.jpg" style="width:100%">
+            <div class="w3-display-bottomleft w3-large w3-container w3-padding-16 w3-black">
+                <a href="~/Admin/RestaurantList">Restaurant list</a>
+            </div>
+        </div>
+
+        <div class="w3-display-container mySlides">
+            <img src="https://cdn-images-1.medium.com/max/1585/1*ztxHHEoRGpC7RdHHh-jhpA.jpeg" style="width:100%">
+            <div class="w3-display-bottomleft w3-large w3-container w3-padding-16 w3-black">
+                <a href="~/Admin/PendingRestaurantApplication">Pending Restaurant Applications</a>
+            </div>
+        </div>
+
+
+
+      
+
+        <button class="w3-button w3-display-left w3-black" onclick="plusDivs(-1)">&#10094;</button>
+        <button class="w3-button w3-display-right w3-black" onclick="plusDivs(1)">&#10095;</button>
+
+    </div>
+ 
+    <script>
+        var slideIndex = 1;
+        showDivs(slideIndex);
+
+        function plusDivs(n) {
+            showDivs(slideIndex += n);
+        }
+
+        function showDivs(n) {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            if (n > x.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = x.length };
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            x[slideIndex - 1].style.display = "block";
+        }
+
+    </script>
+        </div>*@
+
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <img src="http://d1dzqwexhp5ztx.cloudfront.net/imageRepo/4/0/80/27/139/IMG_0020_1_2_S.jpg" alt="..."style="width:10000px;height:700px;">
+            <div class="carousel-caption">
+               <h1><a href="~/Admin/RestaurantList">Restaurant list</a> </h1> 
+            </div>
+        </div>
+        <div class="item">
+            <img src="https://cdn-images-1.medium.com/max/1585/1*ztxHHEoRGpC7RdHHh-jhpA.jpeg" alt="..." style="width:10000px;height:700px;">
+            <div class="carousel-caption">
+               <h1><a href="~/Admin/PendingRestaurantApplication">Pending Restaurant Applications</a> </h1> 
+            </div>
+        </div>
+        ...
+    </div>
+
+    <!-- Controls -->
+    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Add Admin</h2>
+        <p>
+           You may Add another Admin on this link below
+        </p>
+        <p><a class="btn btn-default" href="~/Admin/AddAdmin">Add Admin &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>View Admin List</h2>
+        <p>View the list of admins added in the database.</p>
+        <p><a class="btn btn-default" href="~/Admin/AdminList">View List &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>View User List</h2>
+        <p>View the listed User admin, patrons and owners are on this list.</p>
+        <p><a class="btn btn-default" href="~/Admin/UserList">View List &raquo;</a></p>
+    </div>
+
+</div>

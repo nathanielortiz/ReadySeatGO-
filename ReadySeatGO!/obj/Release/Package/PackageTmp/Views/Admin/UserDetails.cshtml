@@ -1,0 +1,35 @@
+﻿@model ReadySeatGO_.Models.UsersModel
+@if (Session["userid"] == null )
+{
+    Response.Redirect("~/Home/Home");
+}
+
+
+@{
+
+    ViewBag.Title = "UserDetails";
+}
+
+<h2>@Model.Username (@Model.UserType)</h2>
+
+
+<div class="col-lg-6">
+    
+    <p>
+        @Model.FirstName, @Model.LastName<br/>
+        @Model.Email <br />
+        @Model.Mobile
+
+    </p>
+    
+   
+  
+
+    
+</div>
+
+<div class="col-lg-6">
+
+
+</div>
+<a class="btn btn-default" href="~/Admin/AdminList">Go Back &raquo;</a>

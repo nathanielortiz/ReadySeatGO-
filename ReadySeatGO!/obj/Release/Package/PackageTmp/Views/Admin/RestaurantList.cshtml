@@ -1,0 +1,117 @@
+﻿@model IEnumerable<ReadySeatGO_.Models.RestaurantModel>
+
+@{
+
+
+    ViewBag.Title = "PendingRestaurantApplication";
+}
+
+<h2>Restaurant List</h2>
+
+<p>
+    @if(Session["userid"] == null)
+    {
+        Response.Redirect("~/Home/Home");
+    }
+
+
+</p>
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Restaurant)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsFeatured)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Manager)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Branch)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OperatingHours)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Image)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalSeats)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ApprovalStatusID)
+        </th>
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Restaurant)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsFeatured)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Manager)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Branch)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OperatingHours)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Image)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalSeats)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ApprovalStatusID)
+        </td>
+
+        <td>
+            <div class="btn btn-default">
+                @Html.ActionLink("Set as Featured", "SetFeatured", new { id = item.RestaurantID })
+            </div>
+        </td>
+        <td>
+            <div class="btn btn-default">
+                @Html.ActionLink("Remove as Featured", "RemoveFeatured", new { id = item.RestaurantID })
+            </div>
+        </td>
+    </tr>
+}
+
+</table>
+
+    <a class="btn btn-default" href="~/Home/AdminHome">Go Back &raquo;</a>
+
+
+

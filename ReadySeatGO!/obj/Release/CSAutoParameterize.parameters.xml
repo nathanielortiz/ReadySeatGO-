@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="MyCon-Web.config Connection String" description="MyCon Connection String used in web.config by the application to access the database." defaultValue="Server=tcp:danmarvingeronimo.database.windows.net,1433;Initial Catalog=ReadySeatGO;Persist Security Info=False;User ID=dmg;Password=Ajujuguu16;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\darkh\\Documents\\GitHub\\ReadySeatGO-\\ReadySeatGO!\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='MyCon']/@connectionString" />
+  </parameter>
+</parameters>

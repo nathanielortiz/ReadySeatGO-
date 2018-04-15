@@ -103,42 +103,7 @@ namespace ReadySeatGO_.Controllers
         }
 
 
-        //public List<RatingsModel> GetRatings()
-        //{
-        //    var list = new List<RatingsModel>();
-        //    using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
-        //    {
-        //        Rikka.Open();
-        //        string Takanashi = @"SELECT RSG_RatingID, RSG_UserID, RSG_Cleanliness, RSG_CustomerService.
-        //                             RSG_FoodQuality, RSG_Remarks, RSG_DateAdded FROM RSG_Categories 
-        //                             WHERE RSG_RestaurantID=@RID ORDER BY RSG_DateAdded";
-        //        using (SqlCommand WickedEye = new SqlCommand(Takanashi, Rikka))
-        //        {
-        //            using (SqlDataReader Nibutani = WickedEye.ExecuteReader())
-        //            {
-        //                while (Nibutani.Read())
-        //                {
-        //                    list.Add(new RatingsModel
-        //                    {
-        //                        RatingID = int.Parse(Nibutani["RSG_RatingID"].ToString()),
-        //                        restaurantID = int.Parse(Nibutani["RSG"].ToString()),
-        //                        userID = int.Parse(Nibutani["RSG_UserID"].ToString()),
-        //                        Cleanliness = int.Parse(Nibutani["RSG_Cleanliness"].ToString()),
-        //                        CustomerService = int.Parse(Nibutani["RSG_CustomerService"].ToString()),
-        //                        FoodQuality = int.Parse(Nibutani["RSG_FoodQuality"].ToString()),
-        //                        Remarks = Nibutani["RSG_Remarks"].ToString(),
-        //                        DateAdded = DateTime.Parse(Nibutani["RSG_DateAdded"].ToString())
-
-
-
-
-        //                    });
-        //                }
-        //            }
-        //        }
-        //    }
-        //    return list;
-        //}
+        
         public ActionResult LogOut()
         {
             Session.Clear();

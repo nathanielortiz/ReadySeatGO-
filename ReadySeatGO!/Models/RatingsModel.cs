@@ -23,33 +23,39 @@ namespace ReadySeatGO_.Models
 
         public int userID { get; set; }
 
-        public List<UsersModel> Authors { get; set; }
+        public List<UsersModel> Users { get; set; }
 
         [Display(Name = "User")]
         public string User { get; set; }
 
 
 
-        public int TotalCount { get; set; }
-
 
         [Display(Name = "Cleanliness")]
-        [MaxLength(1, ErrorMessage = "Incorrect input.")]
+        [Range(1, 5, ErrorMessage = "Input not in range.")]
         [Required]
         public int Cleanliness { get; set; }
 
+
+
         [Display(Name = "Customer Service")]
-        [MaxLength(1, ErrorMessage = "Incorrect input.")]
+        [Range(1, 5, ErrorMessage = "Input not in range.")]
         [Required]
         public int CustomerService { get; set; }
 
+
+
         [Display(Name = "Food Quality")]
-        [MaxLength(1, ErrorMessage = "Incorrect input.")]
+        [Range(1, 5, ErrorMessage = "Input not in range.")]
         [Required]
         public int FoodQuality { get; set; }
 
+
+
+
         [Display(Name = "Remarks")]
         [MaxLength(100, ErrorMessage = "Incorrect input.")]
+        [DataType(DataType.MultilineText)]
         [Required]
         public string Remarks { get; set; }
 

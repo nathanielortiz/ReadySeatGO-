@@ -22,12 +22,7 @@ namespace ReadySeatGO_.Controllers
 
             return View(list);
         }
-<<<<<<< HEAD
 
-        
-=======
-    
->>>>>>> cc1d8be9d187893a9c014306c8a8cb3c6607c60d
 
         public List<RestaurantModel> GetRestaurants()
         {
@@ -154,28 +149,7 @@ namespace ReadySeatGO_.Controllers
 
 
 
-        //double GetTotalCheckIns(int ? id)
-        //{
-        //    using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
-        //    {
-        //        Rikka.Open();
-        //        string Takanashi = @"SELECT Count(RSG_LogID) AS TotalCheckIns FROM RSG_CheckIn WHERE
-        //                            RSG_RID=@RID";
-        //        using (SqlCommand WickedEye = new SqlCommand(Takanashi, Rikka))
-        //        {
-        //            WickedEye.Parameters.AddWithValue("@RID", id);
-        //            return WickedEye.ExecuteScalar() == null ? 0 : Convert.ToDouble((decimal)WickedEye.ExecuteScalar());
 
-        //        }
-        //    }
-
-        //}
-
-
-
-
-
-        // View Restaurant Details
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -184,11 +158,15 @@ namespace ReadySeatGO_.Controllers
 
             }
 
-            var Chuu2 = new RestaurantModel();
+            var Chuu2 = new CheckStatusModel();
             using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
             {
                 Rikka.Open();
-                string Takanashi = @"SELECT r.RSG_RName, r.RSG_Image, r.RSG_RName, u.RSG_Username, r.RSG_OperatingHours, c.RSG_Category FROM RSG_Restaurants r INNER JOIN RSG_Categories c ON r.RSG_CatID = c.RSG_CatID
+                string Takanashi = @"SELECT r.RSG_CheckStatID, r.RSG_RID, res.RSG_RName, res.RSG_Image, res.RSG_RName, u.RSG_Username, 
+                               res.RSG_Address, res.RSG_ContactNumber, res.RSG_Branch,
+                               res.RSG_OperatingHours,res.RSG_TotalSeats, c.RSG_Category FROM RSG_CheckStat r 
+							   INNER JOIN RSG_Restaurants res ON r.RSG_RID = res.RSG_RID
+                               INNER JOIN RSG_Categories c ON res.RSG_CatID = c.RSG_CatID
                                INNER JOIN RSG_Users u ON r.RSG_UserID = u.RSG_UserID 
                                WHERE r.RSG_RID = @RID";
 
@@ -203,17 +181,22 @@ namespace ReadySeatGO_.Controllers
                         {
                             while (Nibutani.Read())
                             {
-                                Chuu2.Restaurant = Nibutani["RSG_RName"].ToString();
+                                Chuu2.RestaurantID = int.Parse(Nibutani["RSG_RID"].ToString());
+                                Chuu2.RestaurantName = Nibutani["RSG_RName"].ToString();
+                                Chuu2.Address = Nibutani["RSG_Address"].ToString();
                                 Chuu2.Image = Nibutani["RSG_Image"].ToString();
-                                Chuu2.Restaurant = Nibutani["RSG_RName"].ToString();
-                                Chuu2.UserName = Nibutani["RSG_Username"].ToString();
+                                Chuu2.Branch = Nibutani["RSG_Branch"].ToString();
+                                Chuu2.ContactNumber = Nibutani["RSG_ContactNumber"].ToString();
+                                Chuu2.Owner = Nibutani["RSG_Username"].ToString();
+                                Chuu2.TotalSeats = Nibutani["RSG_TotalSeats"].ToString();
                                 Chuu2.OperatingHours = Nibutani["RSG_OperatingHours"].ToString();
                                 Chuu2.Category = Nibutani["RSG_Category"].ToString();
+                                Chuu2.CheckStatusID = int.Parse(Nibutani["RSG_CheckStatID"].ToString());
+
                             }
 
 
-                            //ViewBag.Total = GetTotalCheckIns(id).ToString();
-
+                            ViewBag.Total = (GetTotalCheckIns(id).ToString());
 
                             return View(Chuu2);
                         }
@@ -225,24 +208,100 @@ namespace ReadySeatGO_.Controllers
                 }
             }
         }
-      
 
+        // View Raing
+        public ActionResult ViewAVGRating(int id)
+        {
+            var list = new List<RatingsModel>();
+            using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
+            {
+                Rikka.Open();
+                string Takanashi = @"SELECT AVG(RSG_Cleanliness) AS Cleanliness, AVG(RSG_CustomerService) AS CustomerService, AVG(RSG_FoodQuality) AS FoodQuality FROM RSG_Ratings WHERE RSG_RID = @RSG_RID";
+
+                using (SqlCommand WickedEye = new SqlCommand(Takanashi, Rikka))
+                {
+                    WickedEye.Parameters.AddWithValue("@RSG_RID", id);
+                    using (SqlDataReader data = WickedEye.ExecuteReader())
+                    {
+                        while (data.Read())
+                        {
+                            list.Add(new RatingsModel
+                            {
+                                Cleanliness = int.Parse(data["Cleanliness"].ToString()),
+                                CustomerService = int.Parse(data["CustomerService"].ToString()),
+                                FoodQuality = int.Parse(data["FoodQuality"].ToString()),
+
+
+                            });
+                        }
+                    }
+
+                }
+                return View(list);
+            }
+        }
+
+
+
+        // View Customer Reviews
+        public ActionResult ViewRatings(int? id)
+        {
+            var list = new List<RatingsModel>();
+            using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
+            {
+                Rikka.Open();
+                string Takanashi = @"SELECT r.RSG_Cleanliness, r.RSG_CustomerService, r.RSG_FoodQuality, r.RSG_Remarks, u.RSG_Username FROM RSG_Ratings r INNER JOIN RSG_Users u ON r.RSG_UserID = u.RSG_UserID
+                                    WHERE r.RSG_RID = @RSG_RID";
+
+                using (SqlCommand WickedEye = new SqlCommand(Takanashi, Rikka))
+                {
+                    WickedEye.Parameters.AddWithValue("@RSG_RID", id);
+                    using (SqlDataReader data = WickedEye.ExecuteReader())
+                    {
+                        while (data.Read())
+                        {
+                            list.Add(new RatingsModel
+                            {
+
+                                Cleanliness = int.Parse(data["RSG_Cleanliness"].ToString()),
+                                CustomerService = int.Parse(data["RSG_CustomerService"].ToString()),
+                                FoodQuality = int.Parse(data["RSG_FoodQuality"].ToString()),
+                                Remarks = data["RSG_Remarks"].ToString(),
+                                User = data["RSG_Username"].ToString()
+
+
+
+                            });
+                        }
+                    }
+
+                }
+
+            }
+            return View(list);
+
+        }
 
         // Check-In for Patron(s)
         public ActionResult CheckIn(int? id)
         {
             if (id == null)
-                return RedirectToAction("Index");
+                return RedirectToAction("Favor");
 
             using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
             {
                 Rikka.Open();
-                string Takanashi = @"INSERT INTO RSG_CheckIn VALUES (@RSG_UserID, @RSG_RID, @RSG_Remarks, @RSG_DateAdded)";
+                string Takanashi = @"INSERT INTO RSG_CheckIn VALUES (@RSG_UserID, @RSG_RID, @RSG_Remarks, @RSG_DateAdded)
+                                     
+                                    UPDATE RSG_CheckStat SET RSG_RID=@RSG_RID, RSG_Description=@RD WHERE RSG_UserID=@RSG_UserID";
+                                        
+
                 using (SqlCommand cmd = new SqlCommand(Takanashi, Rikka))
                 {
                     cmd.Parameters.AddWithValue("@RSG_UserID", Session["userid"].ToString());
                     cmd.Parameters.AddWithValue("@RSG_RID", id);
                     cmd.Parameters.AddWithValue("@RSG_Remarks", "Check-in");
+                    cmd.Parameters.AddWithValue("@RD", "Checked-in");
                     cmd.Parameters.AddWithValue("@RSG_DateAdded", DateTime.Now);
                     cmd.ExecuteNonQuery();
                 }
@@ -250,6 +309,65 @@ namespace ReadySeatGO_.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        // Check-Out for Patron(s)
+        public ActionResult CheckOut(int? id)
+        {
+            if (id == null)
+                return RedirectToAction("Favor");
+
+            using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
+            {
+                Rikka.Open();
+                string Takanashi = @"INSERT INTO RSG_CheckOut VALUES (@RSG_UserID, @RSG_RID, @RSG_Remarks, @RSG_DateAdded)
+                                     
+                                    UPDATE RSG_CheckStat SET RSG_RID=@RSG_RID, RSG_Description=@RD WHERE RSG_UserID=@RSG_UserID";
+
+
+                using (SqlCommand cmd = new SqlCommand(Takanashi, Rikka))
+                {
+                    cmd.Parameters.AddWithValue("@RSG_UserID", Session["userid"].ToString());
+                    cmd.Parameters.AddWithValue("@RSG_RID", id);
+                    cmd.Parameters.AddWithValue("@RSG_Remarks", "Check-in");
+                    cmd.Parameters.AddWithValue("@RD", "Checked-out");
+                    cmd.Parameters.AddWithValue("@RSG_DateAdded", DateTime.Now);
+                    cmd.ExecuteNonQuery();
+                }
+
+            }
+            return RedirectToAction("Index");
+        }
+
+        int GetTotalCheckIns(int? id)
+        {
+            int Total = 0;
+            using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
+            {
+                Rikka.Open();
+                string Takanashi = @"SELECT Count(RSG_CheckStatID) AS TOTAL FROM RSG_CheckStat WHERE RSG_Description = @RD AND RSG_RID =@RID";
+
+                using (SqlCommand WickedEye = new SqlCommand(Takanashi, Rikka))
+                {
+                    WickedEye.Parameters.AddWithValue("@RID", id);
+                    WickedEye.Parameters.AddWithValue("@RD", "Checked-in");
+
+                    using (SqlDataReader Nibutani = WickedEye.ExecuteReader())
+                    {
+                        if(Nibutani.HasRows)
+                        {
+                            while(Nibutani.Read())
+                            {
+                                Total = int.Parse(Nibutani["TOTAL"].ToString());
+                            }
+                        }
+                    }
+
+                }
+            }
+            return Total;
+        }
+
+
 
         // Add to Favorite for Patron(s)
         public ActionResult AddtoFavorite(int? id)
@@ -271,9 +389,43 @@ namespace ReadySeatGO_.Controllers
                 }
 
             }
-            return RedirectToAction("ViewFavorites","RestaurantView");
+            return RedirectToAction("ViewFavorites", "RestaurantView");
         }
 
+        // Add Rating
+        public ActionResult AddRating()
+        {
+            RatingsModel Chuu2 = new RatingsModel();
+            return View(Chuu2);
+        }
+
+        [HttpPost]
+        public ActionResult AddRating(RatingsModel Chuu2, int? id)
+        {
+                using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
+                {
+                    Rikka.Open();
+                     string Takanashi = @"INSERT INTO RSG_Ratings VALUES (@RSG_RID, @RSG_UserID, @RSG_Cleanliness, @RSG_CustomerService, @RSG_FoodQuality, @RSG_Remarks, @RSG_DateAdded)";
+                    using (SqlCommand WickedEye = new SqlCommand(Takanashi, Rikka))
+                    {
+                        WickedEye.Parameters.AddWithValue("@RSG_RID", id);
+                         WickedEye.Parameters.AddWithValue("@RSG_UserID", Session["userid"].ToString());
+                        
+                        WickedEye.Parameters.AddWithValue("@RSG_Cleanliness", Chuu2.Cleanliness);
+                        WickedEye.Parameters.AddWithValue("@RSG_CustomerService", Chuu2.CustomerService);
+                        WickedEye.Parameters.AddWithValue("@RSG_FoodQuality", Chuu2.FoodQuality);
+                        WickedEye.Parameters.AddWithValue("@RSG_Remarks", Chuu2.Remarks);
+                        WickedEye.Parameters.AddWithValue("@RSG_DateAdded", DateTime.Now);
+                        
+                        WickedEye.ExecuteNonQuery();
+                        return RedirectToAction("Index");
+                    }
+                }
+
+            }
+        
+
+        // View Favorites
         public ActionResult ViewFavorites()
         {
             if (Session["userid"] == null)
@@ -288,10 +440,9 @@ namespace ReadySeatGO_.Controllers
                 return View(list);
 
             }
-             
+
         }
 
-        // View Favorites
         public List<RestaurantModel> GetFavoriteRestaurants()
         {
 
@@ -344,12 +495,37 @@ namespace ReadySeatGO_.Controllers
 
             return list;
         }
+
+        // Remove from Favorites
+        public ActionResult RemoveFavorites(int? id)
+        {
+            if (id == null)
+                return RedirectToAction("ViewFavorites");
+
+            using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
+            {
+                Rikka.Open();
+                string Takanashi = @"DELETE FROM RSG_Favorites WHERE RSG_FavoriteID=@RFID)";
+                using (SqlCommand cmd = new SqlCommand(Takanashi, Rikka))
+                {
+                    cmd.Parameters.AddWithValue("@RFID", id);
+                   
+                    cmd.ExecuteNonQuery();
+                }
+
+            }
+            return RedirectToAction("ViewFavorites");
+        }
+
+
+
         public ActionResult LogOut()
         {
             Session.Clear();
             return RedirectToAction("Login", "Home");
         }
-        // Edit Favorites
+
+        // Remove Favorites
         public ActionResult RemoveFavorite(int? id)
         {
             if (id == null)
@@ -369,6 +545,7 @@ namespace ReadySeatGO_.Controllers
             }
             return RedirectToAction("ViewFavorites");
         }
+
 
         public List<RestaurantModel> GetOwnedRestaurants()
         {

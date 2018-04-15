@@ -47,11 +47,15 @@ namespace ReadySeatGO_.Controllers
                 using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
                 {
                     Rikka.Open();
-                    string Takanashi = @"INSERT INTO RSG_Users VALUES
+                    string Takanashi = @"
+                    INSERT INTO RSG_Users VALUES
                     (@RSG_UserTypeID, @RSG_Username, @RSG_UPassword, @RSG_Email, 
-                   @RSG_FirstName, @RSG_LastName,
-                   @RSG_Address, @RSG_Status, @RSG_Mobile, 
-                    @RSG_DateAdded, @RSG_DateModified)";
+                    @RSG_FirstName, @RSG_LastName,
+                    @RSG_Address, @RSG_Status, @RSG_Mobile, 
+                    @RSG_DateAdded, @RSG_DateModified)
+
+
+                   ";
                     using (SqlCommand WickedEye = new SqlCommand(Takanashi, Rikka))
                     {
 

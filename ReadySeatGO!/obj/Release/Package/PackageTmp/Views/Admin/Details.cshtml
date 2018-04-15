@@ -1,0 +1,38 @@
+﻿@model ReadySeatGO_.Models.RestaurantModel
+@if (Session["userid"] == null )
+{
+    Response.Redirect("~/Home/Home");
+}
+
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>@Model.Restaurant (@Model.Category)</h2>
+
+<p>
+    Category: <a href='../Index?c=@Model.CatID'>@Model.Category</a>
+    <hr />
+
+</p>
+<div class="col-lg-6">
+    <img src="../../Images/Products/@Model.Image" class="img-circle img-responsive" alt="@Model.Restaurant" />
+</div>
+
+<div class="col-lg-6">
+    <p>
+        @Model.OperatingHours
+    </p>
+    <p>
+        <h3>
+            @Model.UserName
+        </h3>
+
+    </p>
+
+</div>

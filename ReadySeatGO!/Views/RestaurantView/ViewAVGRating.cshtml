@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ReadySeatGO_.Models.RatingsModel>
+
+@{
+    ViewBag.Title = "ViewAVGRating";
+}
+
+<h2>ViewAVGRating</h2>
+
+
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Cleanliness)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerService)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.FoodQuality)
+        </th>
+
+
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.Cleanliness)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.CustomerService)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.FoodQuality)
+        </td>
+
+
+
+        <td>
+            
+
+        </td>
+    </tr>
+}
+
+</table>
