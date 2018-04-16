@@ -47,8 +47,7 @@ namespace ReadySeatGO_.Controllers
                 using (SqlConnection Rikka = new SqlConnection(Dekomori.GetConnection()))
                 {
                     Rikka.Open();
-                    string Takanashi = @"
-                    INSERT INTO RSG_Users VALUES
+                    string Takanashi = @"INSERT INTO RSG_Users VALUES
                     (@RSG_UserTypeID, @RSG_Username, @RSG_UPassword, @RSG_Email, 
                     @RSG_FirstName, @RSG_LastName,
                     @RSG_Address, @RSG_Status, @RSG_Mobile, 
@@ -59,8 +58,9 @@ namespace ReadySeatGO_.Controllers
                     using (SqlCommand WickedEye = new SqlCommand(Takanashi, Rikka))
                     {
 
-                        WickedEye.Parameters.AddWithValue("@RSG_UPassword", Chuu2.UserPassword);
+                        WickedEye.Parameters.AddWithValue("@RSG_UserTypeID", 1);
                         WickedEye.Parameters.AddWithValue("@RSG_UserName", Chuu2.Username);
+                        WickedEye.Parameters.AddWithValue("@RSG_UPassword", Chuu2.UserPassword);
                         WickedEye.Parameters.AddWithValue("@RSG_Email", Chuu2.Email);
                         WickedEye.Parameters.AddWithValue("@RSG_FirstName", Chuu2.FirstName);
                         WickedEye.Parameters.AddWithValue("@RSG_LastName", Chuu2.LastName);
@@ -69,7 +69,7 @@ namespace ReadySeatGO_.Controllers
                         WickedEye.Parameters.AddWithValue("@RSG_Mobile", Chuu2.Mobile);
                         WickedEye.Parameters.AddWithValue("@RSG_DateAdded", DateTime.Now);
                         WickedEye.Parameters.AddWithValue("@RSG_DateModified", DBNull.Value);
-                        WickedEye.Parameters.AddWithValue("@RSG_UserTypeID", 1);
+                        
 
                         WickedEye.ExecuteNonQuery();
                         return RedirectToAction("Home");
