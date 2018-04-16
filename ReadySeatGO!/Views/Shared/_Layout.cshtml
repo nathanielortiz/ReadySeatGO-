@@ -46,23 +46,27 @@
             <a href="@Url.Action("LogOut")" onclick="w3_close()" class="w3-bar-item w3-button">Log Out</a>
 
         }
-        @if ((string)Session["typeid"]== "1")
+        @if ((string)Session["typeid"] == "1")
         {
-            <a href="~/Home/UserHome" onclick="w3_close()"  class="w3-bar-item w3-button">Home</a>
+            <a href="~/Home/UserHome" onclick="w3_close()" class="w3-bar-item w3-button">Patron Home</a>
+            
         }
-        @if ((string)Session["typeid"]== "2")
+        @if ((string)Session["typeid"] == "2")
         {
-            <a href="~/Home/AdminHome" onclick="w3_close()" class="w3-bar-item w3-button">Home</a>
+            <a href="~/Home/AdminHome" onclick="w3_close()" class="w3-bar-item w3-button">Admin Home</a>
+           
         }
-        @if((string)Session["typeid"] == "3")
+        @if ((string)Session["typeid"] == "3")
         {
-            <a href="~/Home/OwnerHome" onclick="w3_close()" class="w3-bar-item w3-button">Home</a>
+            <a href="~/Home/OwnerHome" onclick="w3_close()" class="w3-bar-item w3-button">Owner's Home</a>
         }
         else
         {
+
             <a href="~/Home/Home" onclick="w3_close()" class="w3-bar-item w3-button">Home</a>
+            <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">About</a>
         }
-        <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">About</a>
+  
         
 
     </nav>
